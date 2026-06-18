@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Balance Testing — Complete User Guide</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --brand: #1a5e95;
+      --brand-dark: #13456f;
+      --accent: #0ea5e9;
+      --border: #dbe3ef;
+      --success: #059669;
+      --warning: #d97706;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 14px;
+      --max: 980px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #eef4fb 0%, var(--bg) 220px);
+      line-height: 1.65;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #13456f 0%, #1a5e95 55%, #0ea5e9 100%);
+      color: #fff;
+      padding: 56px 24px 72px;
+    }
+    .hero-inner, .container { max-width: var(--max); margin: 0 auto; }
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      line-height: 1.15;
+      color: #ffffff;
+    }
+    .hero p {
+      margin: 0;
+      max-width: 760px;
+      font-size: 1.08rem;
+      color: rgba(255, 255, 255, 0.92);
+      line-height: 1.6;
+    }
+    .hero-meta {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #ffffff;
+      font-size: 0.88rem;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .hero-search {
+      margin-top: 22px;
+      max-width: 520px;
+      position: relative;
+    }
+    .hero-search label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 8px;
+    }
+    .hero-search input {
+      width: 100%;
+      padding: 12px 14px 12px 40px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    }
+    .hero-search input:focus {
+      border-color: #fff;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
+    }
+    .hero-search-icon {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      color: var(--muted);
+      pointer-events: none;
+      font-size: 1rem;
+    }
+    .search-results {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 6px);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      max-height: 280px;
+      overflow-y: auto;
+      z-index: 50;
+      display: none;
+    }
+    .search-results.open { display: block; }
+    .search-results button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      border: 0;
+      background: transparent;
+      padding: 10px 14px;
+      cursor: pointer;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .search-results button:last-child { border-bottom: 0; }
+    .search-results button:hover,
+    .search-results button.focused {
+      background: #eff6ff;
+    }
+    .search-results .sr-title {
+      display: block;
+      font-weight: 600;
+      color: var(--brand-dark);
+      font-size: 0.95rem;
+    }
+    .search-results .sr-meta {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .search-empty {
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .layout {
+      max-width: calc(var(--max) + 280px);
+      margin: -36px auto 48px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    nav.toc {
+      position: sticky;
+      top: 20px;
+      max-height: calc(100vh - 40px);
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 0;
+      overflow: hidden;
+    }
+    nav.toc .toc-links {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      flex: 1;
+      overflow: hidden;
+    }
+    nav.toc .toc-nav-scroll {
+      flex: 1;
+      min-height: 0;
+      max-height: calc(100vh - 220px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 12px 12px 14px;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+    nav.toc .toc-nav-scroll::-webkit-scrollbar {
+      width: 7px;
+    }
+    nav.toc .toc-nav-scroll::-webkit-scrollbar-track {
+      background: transparent;
+      margin: 4px 0;
+    }
+    nav.toc .toc-nav-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 999px;
+      border: 2px solid var(--surface);
+    }
+    nav.toc .toc-nav-scroll::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    @supports (scrollbar-color: auto) {
+      nav.toc .toc-nav-scroll {
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 transparent;
+      }
+    }
+    nav.toc .toc-scroll-hint {
+      flex-shrink: 0;
+      padding: 6px 12px 10px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: center;
+      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, var(--surface) 30%);
+      border-top: 1px solid #f1f5f9;
+    }
+    nav.toc h2.toc-head-title {
+      margin: 0;
+      padding: 14px 0 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #64748b;
+    }
+    nav.toc a.toc-link {
+      display: block;
+      color: #374151;
+      text-decoration: none;
+      padding: 8px 10px;
+      margin: 3px 0;
+      font-size: 0.9rem;
+      line-height: 1.35;
+      border-radius: 8px;
+      border-left: 3px solid transparent;
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+    }
+    nav.toc a.toc-link.sub {
+      padding-left: 18px;
+      font-size: 0.84rem;
+    }
+
+    /* Sidebar search */
+    nav.toc .toc-links-head {
+      flex-shrink: 0;
+      padding: 14px 14px 12px;
+      background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+      border-bottom: 1px solid #e2e8f0;
+      position: relative;
+      z-index: 5;
+      overflow: visible;
+    }
+    nav.toc .toc-search {
+      margin: 0;
+      position: relative;
+    }
+    nav.toc .toc-search input {
+      width: 100%;
+      padding: 11px 12px 11px 36px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      outline: none;
+      background: #fff;
+      color: var(--text);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    nav.toc .toc-search input::placeholder {
+      color: #94a3b8;
+    }
+    nav.toc .toc-search input:focus {
+      border-color: #0ea5e9;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18);
+    }
+    nav.toc .toc-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      font-size: 0.95rem;
+      pointer-events: none;
+      line-height: 1;
+    }
+    nav.toc .toc-search .search-results {
+      top: calc(100% + 6px);
+      z-index: 100;
+    }
+
+    /* Group cards — same layout, unique colors per section */
+    nav.toc .toc-group {
+      margin: 0 0 12px;
+      padding: 12px 10px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--g-border, #e2e8f0);
+      background: var(--g-bg, #f8fafc);
+      box-shadow: inset 0 0 0 1px var(--g-inset, transparent);
+    }
+    nav.toc .toc-group:last-child { margin-bottom: 4px; }
+    nav.toc .toc-group-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--g-label, #64748b);
+      padding: 0 6px 10px;
+      line-height: 1.35;
+      border-bottom: 1px solid var(--g-label-line, rgba(0,0,0,0.06));
+      margin-bottom: 6px;
+    }
+    nav.toc .toc-group a.toc-link:hover {
+      background: var(--g-hover-bg);
+      color: var(--g-hover-text);
+      border-left-color: var(--g-hover-border);
+    }
+    nav.toc .toc-group a.toc-link.active {
+      background: var(--g-active-bg);
+      color: var(--g-active-text);
+      font-weight: 600;
+      border-left-color: var(--g-active-border);
+    }
+    nav.toc .toc-group.is-active {
+      border-color: var(--g-active-ring);
+      box-shadow: 0 0 0 1px var(--g-active-ring), inset 0 0 0 1px var(--g-inset);
+    }
+
+    nav.toc .toc-group--intro {
+      --g-bg: linear-gradient(165deg, #f8fafc 0%, #f1f5f9 100%);
+      --g-border: #cbd5e1;
+      --g-inset: rgba(100, 116, 139, 0.08);
+      --g-label: #475569;
+      --g-label-line: rgba(71, 85, 105, 0.15);
+      --g-hover-bg: rgba(100, 116, 139, 0.14);
+      --g-hover-text: #1e293b;
+      --g-hover-border: #94a3b8;
+      --g-active-bg: #e2e8f0;
+      --g-active-text: #0f172a;
+      --g-active-border: #64748b;
+      --g-active-ring: #94a3b8;
+    }
+    nav.toc .toc-group--tests {
+      --g-bg: linear-gradient(165deg, #eff6ff 0%, #dbeafe 100%);
+      --g-border: #93c5fd;
+      --g-inset: rgba(37, 99, 235, 0.1);
+      --g-label: #1d4ed8;
+      --g-label-line: rgba(29, 78, 216, 0.15);
+      --g-hover-bg: rgba(59, 130, 246, 0.18);
+      --g-hover-text: #1e3a8a;
+      --g-hover-border: #60a5fa;
+      --g-active-bg: #bfdbfe;
+      --g-active-text: #1e3a8a;
+      --g-active-border: #2563eb;
+      --g-active-ring: #3b82f6;
+    }
+    nav.toc .toc-group--exercises {
+      --g-bg: linear-gradient(165deg, #ecfdf5 0%, #d1fae5 100%);
+      --g-border: #6ee7b7;
+      --g-inset: rgba(16, 185, 129, 0.12);
+      --g-label: #047857;
+      --g-label-line: rgba(4, 120, 87, 0.18);
+      --g-hover-bg: rgba(16, 185, 129, 0.2);
+      --g-hover-text: #064e3b;
+      --g-hover-border: #34d399;
+      --g-active-bg: #a7f3d0;
+      --g-active-text: #065f46;
+      --g-active-border: #059669;
+      --g-active-ring: #10b981;
+    }
+    nav.toc .toc-group--participants {
+      --g-bg: linear-gradient(165deg, #faf5ff 0%, #ede9fe 100%);
+      --g-border: #c4b5fd;
+      --g-inset: rgba(124, 58, 237, 0.1);
+      --g-label: #6d28d9;
+      --g-label-line: rgba(109, 40, 217, 0.15);
+      --g-hover-bg: rgba(139, 92, 246, 0.18);
+      --g-hover-text: #4c1d95;
+      --g-hover-border: #a78bfa;
+      --g-active-bg: #ddd6fe;
+      --g-active-text: #5b21b6;
+      --g-active-border: #7c3aed;
+      --g-active-ring: #8b5cf6;
+    }
+    nav.toc .toc-group--site {
+      --g-bg: linear-gradient(165deg, #fff7ed 0%, #ffedd5 100%);
+      --g-border: #fdba74;
+      --g-inset: rgba(234, 88, 12, 0.1);
+      --g-label: #c2410c;
+      --g-label-line: rgba(194, 65, 12, 0.15);
+      --g-hover-bg: rgba(249, 115, 22, 0.16);
+      --g-hover-text: #9a3412;
+      --g-hover-border: #fb923c;
+      --g-active-bg: #fed7aa;
+      --g-active-text: #9a3412;
+      --g-active-border: #ea580c;
+      --g-active-ring: #f97316;
+    }
+    nav.toc .toc-group--system {
+      --g-bg: linear-gradient(165deg, #ecfeff 0%, #cffafe 100%);
+      --g-border: #67e8f9;
+      --g-inset: rgba(6, 182, 212, 0.1);
+      --g-label: #0e7490;
+      --g-label-line: rgba(14, 116, 144, 0.15);
+      --g-hover-bg: rgba(6, 182, 212, 0.16);
+      --g-hover-text: #164e63;
+      --g-hover-border: #22d3ee;
+      --g-active-bg: #a5f3fc;
+      --g-active-text: #155e75;
+      --g-active-border: #0891b2;
+      --g-active-ring: #06b6d4;
+    }
+    nav.toc .toc-group--reference {
+      --g-bg: linear-gradient(165deg, #fefce8 0%, #fef9c3 100%);
+      --g-border: #fde047;
+      --g-inset: rgba(202, 138, 4, 0.1);
+      --g-label: #a16207;
+      --g-label-line: rgba(161, 98, 7, 0.15);
+      --g-hover-bg: rgba(234, 179, 8, 0.18);
+      --g-hover-text: #854d0e;
+      --g-hover-border: #facc15;
+      --g-active-bg: #fef08a;
+      --g-active-text: #713f12;
+      --g-active-border: #ca8a04;
+      --g-active-ring: #eab308;
+    }
+
+    .content-group-banner {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px 22px;
+      margin: 8px 0 6px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: #f8fafc;
+    }
+    .content-group-banner--exercises {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border-color: #6ee7b7;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.12);
+    }
+    .content-group-banner--tests {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border-color: #93c5fd;
+    }
+    .content-group-banner--participants {
+      background: linear-gradient(135deg, #faf5ff 0%, #ede9fe 100%);
+      border-color: #c4b5fd;
+    }
+    .content-group-banner--site {
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+      border-color: #fdba74;
+    }
+    .content-group-banner--reference {
+      background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+      border-color: #fde047;
+    }
+    .content-group-icon {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      background: rgba(255,255,255,0.85);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .content-group-banner h2 {
+      margin: 0 0 4px;
+      font-size: 1.25rem;
+      color: var(--brand-dark);
+    }
+    .content-group-banner p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #475569;
+    }
+
+    section.section-exercise {
+      border-left: 4px solid #10b981;
+    }
+    section.section-exercise h2 {
+      color: #065f46;
+    }
+
+    .exercise-quicknav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .exercise-quicknav a {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #a7f3d0;
+      background: #fff;
+      color: #065f46;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .exercise-quicknav a:hover {
+      background: #ecfdf5;
+      border-color: #34d399;
+    }
+    .exercise-quicknav a span {
+      display: block;
+      font-weight: 400;
+      font-size: 0.82rem;
+      color: #047857;
+      margin-top: 3px;
+    }
+
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .screenshot-grid figure {
+      margin: 0;
+    }
+    .screenshot-grid figcaption {
+      font-size: 0.88rem;
+    }
+
+    main {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 30px;
+      margin-bottom: 22px;
+    }
+    section h2 {
+      margin: 0 0 8px;
+      color: var(--brand-dark);
+      font-size: 1.65rem;
+    }
+    section h3 {
+      margin: 28px 0 10px;
+      color: var(--brand);
+      font-size: 1.15rem;
+    }
+    section h4 { margin: 18px 0 8px; }
+    p, li { color: #334155; }
+    ul, ol { padding-left: 1.25rem; }
+    li { margin: 6px 0; }
+
+    .lead { font-size: 1.05rem; color: #475569; }
+    .note, .tip, .warn {
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 16px 0;
+      border-left: 4px solid;
+    }
+    .note { background: #eff6ff; border-color: #3b82f6; }
+    .tip { background: #ecfdf5; border-color: var(--success); }
+    .warn { background: #fffbeb; border-color: var(--warning); }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .flow-step {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .flow-step strong { display: block; color: var(--brand-dark); margin-bottom: 6px; }
+
+    figure {
+      margin: 18px 0 24px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    figcaption {
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      color: var(--muted);
+      background: #f8fafc;
+      border-top: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #f1f5f9; color: var(--brand-dark); }
+
+    code, .path {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.92em;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-admin { background: #dbeafe; color: #1d4ed8; }
+    .badge-user { background: #dcfce7; color: #166534; }
+
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 14px 0 18px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .table-wrap table { margin: 0; min-width: 520px; }
+
+    .timeline {
+      border-left: 3px solid var(--accent);
+      margin: 20px 0;
+      padding-left: 20px;
+    }
+    .timeline-item {
+      margin-bottom: 22px;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -27px;
+      top: 6px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .timeline-item strong { color: var(--brand-dark); display: block; margin-bottom: 4px; }
+
+    .toc-toggle {
+      display: none;
+      width: calc(100% - 28px);
+      margin: 14px 14px 0;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--brand-dark);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-align: left;
+    }
+    .toc-toggle::after {
+      content: " ▾";
+      float: right;
+      opacity: 0.6;
+    }
+    nav.toc.collapsed .toc-toggle::after { content: " ▸"; }
+
+    footer {
+      max-width: var(--max);
+      margin: 0 auto 40px;
+      padding: 0 20px 24px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: -28px;
+        padding: 0 16px;
+      }
+      nav.toc {
+        position: static;
+        max-height: none;
+      }
+      nav.toc:not(.collapsed) {
+        max-height: min(75vh, 640px);
+      }
+      nav.toc:not(.collapsed) .toc-nav-scroll {
+        max-height: min(52vh, 420px);
+      }
+      nav.toc .toc-links-head {
+        padding: 12px 12px 0;
+      }
+      .toc-toggle { display: block; }
+      nav.toc.collapsed { padding-bottom: 14px; }
+      nav.toc:not(.collapsed) .toc-toggle { margin-bottom: 0; }
+      nav.toc.collapsed .toc-links { display: none; }
+      section { padding: 22px 18px; }
+      section h2 { font-size: 1.45rem; }
+      .hero { padding: 44px 16px 56px; }
+      .hero-search { max-width: 100%; }
+      .flow { grid-template-columns: 1fr; }
+    }
+
+    @media (min-width: 961px) {
+      nav.toc.collapsed .toc-links { display: block; }
+      .toc-toggle { display: none !important; }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.75rem; }
+      .hero p { font-size: 1rem; }
+      .pill {
+        white-space: normal;
+        font-size: 0.82rem;
+        padding: 7px 12px;
+      }
+      section { padding: 18px 14px; margin-bottom: 16px; }
+      th, td { padding: 8px 10px; font-size: 0.88rem; }
+      .hero-search-icon { bottom: 13px; }
+      .hero-search input { font-size: 16px; }
+      nav.toc .toc-search input { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <h1>Balance Testing — Complete User Guide</h1>
+      <p>
+        Everything you need to run the Parempi tasapaino course: create balance tests and exercises,
+        follow each participant’s progress, approve their personal exercise program, and understand
+        how ratings and rounds work — written for site administrators, not developers.
+      </p>
+      <div class="hero-meta">
+        <span class="pill">Plugin: Balance Testing</span>
+        <span class="pill">Site: parempitasapaino.fi</span>
+        <span class="pill">Updated: June 2026</span>
+      </div>
+      <div class="hero-search" id="hero-search-wrap">
+        <label for="hero-search">Search documentation</label>
+        <span class="hero-search-icon" aria-hidden="true">⌕</span>
+        <input type="search" id="hero-search" placeholder="e.g. approve exercises, copy test, Harjoitukset…" autocomplete="off" />
+        <div class="search-results" id="hero-search-results" role="listbox" aria-label="Search suggestions"></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="toc collapsed" id="toc-nav" aria-label="Table of contents">
+      <button type="button" class="toc-toggle" id="toc-toggle" aria-expanded="false">Show contents</button>
+      <div class="toc-links">
+      <div class="toc-links-head">
+        <div class="toc-search" id="sidebar-search-wrap">
+          <span class="toc-search-icon" aria-hidden="true">⌕</span>
+          <input type="search" id="sidebar-search" placeholder="Quick search…" autocomplete="off" aria-label="Search documentation" />
+          <div class="search-results" id="sidebar-search-results" role="listbox" aria-label="Search suggestions"></div>
+        </div>
+        <h2 class="toc-head-title">Navigation</h2>
+      </div>
+      <div class="toc-nav-scroll" id="toc-nav-scroll">
+
+      <div class="toc-group toc-group--intro" data-group="intro">
+        <span class="toc-group-label">Introduction</span>
+        <a class="toc-link" href="#getting-started" data-section="getting-started" data-group="intro">Getting started</a>
+        <a class="toc-link" href="#overview" data-section="overview" data-group="intro">What this system does</a>
+        <a class="toc-link" href="#how-system-works" data-section="how-system-works" data-group="intro">Full journey (start to finish)</a>
+      </div>
+
+      <div class="toc-group toc-group--tests" data-group="tests">
+        <span class="toc-group-label">Balance tests</span>
+        <a class="toc-link" href="#admin-menu" data-section="admin-menu" data-group="tests">Admin menu — Tests</a>
+        <a class="toc-link sub" href="#create-test" data-section="create-test" data-group="tests">Create a balance test</a>
+        <a class="toc-link sub" href="#rating-explained" data-section="rating-explained" data-group="tests">Rating scale (1–6)</a>
+        <a class="toc-link sub" href="#how-tests-chosen" data-section="how-tests-chosen" data-group="tests">How tests are chosen</a>
+        <a class="toc-link sub" href="#balance-tests" data-section="balance-tests" data-group="tests">Participant: Tasapainotestit</a>
+      </div>
+
+      <div class="toc-group toc-group--exercises" data-group="exercises">
+        <span class="toc-group-label">★ Exercises (full guide)</span>
+        <a class="toc-link" href="#exercises-guide" data-section="exercises-guide" data-group="exercises">Exercises — overview &amp; workflow</a>
+        <a class="toc-link sub" href="#copy-exercise" data-section="copy-exercise" data-group="exercises">Create from test (Copy To excercise)</a>
+        <a class="toc-link sub" href="#bulk-copy" data-section="bulk-copy" data-group="exercises">Bulk copy (initial setup)</a>
+        <a class="toc-link sub" href="#edit-exercise" data-section="edit-exercise" data-group="exercises">Edit an exercise</a>
+        <a class="toc-link sub" href="#approve-exercises" data-section="approve-exercises" data-group="exercises">Approve suggestions</a>
+        <a class="toc-link sub" href="#display-to-user" data-section="display-to-user" data-group="exercises">Display to participant</a>
+        <a class="toc-link sub" href="#harjoitukset" data-section="harjoitukset" data-group="exercises">Participant: Harjoitukset tab</a>
+        <a class="toc-link sub" href="#settings" data-section="settings" data-group="exercises">Exercise countdown &amp; timing</a>
+      </div>
+
+      <div class="toc-group toc-group--participants" data-group="participants">
+        <span class="toc-group-label">Participants &amp; progress</span>
+        <a class="toc-link" href="#create-users" data-section="create-users" data-group="participants">Add course participants</a>
+        <a class="toc-link" href="#users-progress" data-section="users-progress" data-group="participants">Users Progress dashboard</a>
+      </div>
+
+      <div class="toc-group toc-group--site" data-group="site">
+        <span class="toc-group-label">Participant website</span>
+        <a class="toc-link" href="#frontend" data-section="frontend" data-group="site">Overview</a>
+        <a class="toc-link sub" href="#login" data-section="login" data-group="site">Login</a>
+        <a class="toc-link sub" href="#account-nav" data-section="account-nav" data-group="site">Account menu</a>
+        <a class="toc-link sub" href="#progress" data-section="progress" data-group="site">Progress check-in</a>
+      </div>
+
+      <div class="toc-group toc-group--system" data-group="system">
+        <span class="toc-group-label">Rounds &amp; emails</span>
+        <a class="toc-link" href="#rounds" data-section="rounds" data-group="system">When rounds start &amp; end</a>
+        <a class="toc-link" href="#notifications" data-section="notifications" data-group="system">Emails you receive</a>
+      </div>
+
+      <div class="toc-group toc-group--reference" data-group="reference">
+        <span class="toc-group-label">Help &amp; checklists</span>
+        <a class="toc-link" href="#faq" data-section="faq" data-group="reference">FAQ &amp; troubleshooting</a>
+        <a class="toc-link" href="#checklist" data-section="checklist" data-group="reference">Quick checklists</a>
+      </div>
+
+      </div>
+      <p class="toc-scroll-hint" id="toc-scroll-hint" aria-hidden="true">Scroll for more sections ↓</p>
+      </div>
+    </nav>
+
+    <main>
+
+      <section id="getting-started">
+        <h2>Getting started</h2>
+        <p class="lead">
+          This guide is for the person who manages the course on the website — you do not need programming knowledge.
+          You work in two places: the <strong>WordPress admin</strong> (backend) and the <strong>public website</strong> (what participants see).
+        </p>
+
+        <h3>Where to log in</h3>
+        <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Who</th><th>Where</th><th>What for</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>You (administrator)</strong></td>
+              <td>Your site address + <strong>/wp-admin/</strong></td>
+              <td>Create tests &amp; exercises, view progress, approve exercises, change settings</td>
+            </tr>
+            <tr>
+              <td><strong>Course participant</strong></td>
+              <td><strong>/omatestaus/</strong> (login) → <strong>/bt-user-account/</strong> (account)</td>
+              <td>Do balance tests, read exercises, fill progress forms</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>Two content types you manage</h3>
+        <ul>
+          <li><strong>Tests</strong> — balance assessments shown to participants. Each has instructions, video, photos, and a difficulty scale (1–6).</li>
+          <li><strong>Exercises</strong> — training content linked to a test. When a participant rates a test as moderately difficult (3 or 4), the matching exercise can be suggested for them.</li>
+        </ul>
+
+        <div class="tip">
+          <strong>Golden rule:</strong> Every published test should have a published exercise linked to it before participants start the course.
+          Use <strong>Copy To excercise</strong> (one test) or <strong>Bulk copy to exercises</strong> (many tests at once).
+        </div>
+      </section>
+
+      <section id="overview">
+        <h2>1. What this system does</h2>
+        <p class="lead">
+          The Balance Testing system runs a personalised balance course for each participant over several <strong>rounds</strong>.
+          They rate how difficult each test feels; you review and publish their exercise program; the system sends timed follow-up emails for the next round.
+        </p>
+
+        <div class="flow">
+          <div class="flow-step"><strong>1. You prepare content</strong>Create and publish Tests, then create matching Exercises.</div>
+          <div class="flow-step"><strong>2. Participant tests</strong>They log in and rate tests from 1 (easy) to 6 (impossible).</div>
+          <div class="flow-step"><strong>3. Round completes</strong>The system suggests exercises based on their 3 and 4 ratings.</div>
+          <div class="flow-step"><strong>4. You review</strong>Approve, reorder, or add exercises in Users Progress.</div>
+          <div class="flow-step"><strong>5. You publish</strong>Click Display exercises — participant sees Harjoitukset and gets email.</div>
+          <div class="flow-step"><strong>6. Follow-up</strong>After ~12 days, participant gets next-round email and progress questions.</div>
+        </div>
+
+        <h3>Words you will see</h3>
+        <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Term</th><th>Plain meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Test</strong></td><td>A balance assessment the participant performs and rates.</td></tr>
+            <tr><td><strong>Exercise</strong></td><td>Training instructions (often video + text) shown after you approve and display them.</td></tr>
+            <tr><td><strong>Round</strong></td><td>One testing period: Round 1 (first tests), Round 2, Round 3, then final progress questions.</td></tr>
+            <tr><td><strong>Rating 1–6</strong></td><td>How hard the test felt. Ratings <strong>3 and 4</strong> are the most important — they choose exercises and next-round tests.</td></tr>
+            <tr><td><strong>Harjoitukset</strong></td><td>Finnish for “Exercises” — the tab where participants see their approved program.</td></tr>
+            <tr><td><strong>Tasapainotestit</strong></td><td>Finnish for “Balance tests” — where participants do and rate tests.</td></tr>
+            <tr><td><strong>Alkukysely</strong></td><td>Initial questionnaire before the first test round.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="note">
+          <strong>Important:</strong> Participants cannot register themselves. You create their login in WordPress (Users → Add New).
+          Public registration is turned off on purpose.
+        </div>
+      </section>
+
+      <section id="how-system-works">
+        <h2>2. Full journey — start to finish</h2>
+        <p class="lead">Read this once to understand the whole course flow. Details for each step are in the sections below.</p>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <strong>Phase A — You set up the library (one time)</strong>
+            Create all balance tests with video and instructions. Copy each test to an exercise and publish both.
+            Set email delays under Tests → Settings (default: 12 days between rounds).
+          </div>
+          <div class="timeline-item">
+            <strong>Phase B — You add a participant</strong>
+            Create a WordPress user (username + password). Send them the login page link (/omatestaus/).
+          </div>
+          <div class="timeline-item">
+            <strong>Phase C — Participant: Round 1</strong>
+            They complete Alkukysely, then open Tasapainotestit. Each test shows one at a time; they watch the video, do the test, tap a number 1–6, then Seuraava testi (next test).
+            Round 1 ends when they hit the test limit (43 tests), collect six ratings of 3 or 4, or run out of tests to do.
+          </div>
+          <div class="timeline-item">
+            <strong>Phase D — System suggests exercises</strong>
+            Automatically: up to <strong>5 exercises per round</strong>, one per test they rated 3 or 4 (if that test has a linked exercise).
+            You receive an email asking you to review.
+          </div>
+          <div class="timeline-item">
+            <strong>Phase E — You approve and display</strong>
+            Tests → Users Progress → VIEW → Exercise assignments. Approve rows, reorder if needed, click <strong>Display exercises</strong>.
+            Participant gets email “Harjoituksesi ovat valmiina” and sees exercises on Harjoitukset tab.
+          </div>
+          <div class="timeline-item">
+            <strong>Phase F — Waiting period</strong>
+            Participant does exercises (recommended period: 12 days countdown on screen; exercises stay visible after countdown reaches zero).
+            ~12 days after round ended, they receive email for progress check-in and Round 2 tests.
+          </div>
+          <div class="timeline-item">
+            <strong>Phase G — Rounds 2 and 3</strong>
+            Same pattern: priority re-tests for tests they rated 3, 4, or 5 before → new exercise suggestions → you approve &amp; display → next email.
+            Round 3 is the last test round.
+          </div>
+          <div class="timeline-item">
+            <strong>Phase H — Final progress</strong>
+            After Round 3, participant fills final progress questions (symptoms, exercise habits). You can read answers in Users Progress.
+          </div>
+        </div>
+      </section>
+
+      <div class="content-group-banner content-group-banner--tests" id="group-tests">
+        <div class="content-group-icon" aria-hidden="true">📋</div>
+        <div>
+          <h2>Balance tests</h2>
+          <p>Create and manage assessment content. Participants rate each test 1–6 on Tasapainotestit.</p>
+        </div>
+      </div>
+
+      <section id="admin-menu">
+        <h2>Admin menu — Tests <span class="badge badge-admin">Admin</span></h2>
+        <p>
+          After logging into WordPress, look at the left sidebar. All course tools are under <strong>Tests</strong> and <strong>Exercises</strong>.
+        </p>
+
+        <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Menu item</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tests → All Tests</td><td>List, edit, publish balance tests</td></tr>
+            <tr><td>Tests → Add Post</td><td>Create a new test</td></tr>
+            <tr><td>Tests → Bulk copy to exercises</td><td>Copy all unlinked tests to exercises at once</td></tr>
+            <tr><td>Tests → Users Progress</td><td>View users, round limits, exercise assignments</td></tr>
+            <tr><td>Tests → Settings</td><td>Round invite delays, exercise period, clear user data</td></tr>
+            <tr><td>Exercises → All Exercises</td><td>Edit training content linked to tests</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <figure>
+          <img src="assets/02-tests-list.png" alt="Tests list in WordPress admin" />
+          <figcaption>Tests list with Identifier and Linked test columns.</figcaption>
+        </figure>
+      </section>
+
+      <section id="create-test">
+        <h2>Create a balance test <span class="badge badge-admin">Admin</span></h2>
+        <p class="lead">A test is what the participant sees on Tasapainotestit: instructions, video, reference table, and rating buttons.</p>
+
+        <h3>Step-by-step</h3>
+        <ol>
+          <li>Go to <strong>Tests → Add Post</strong> (or open an existing test under All Tests).</li>
+          <li><strong>Title</strong> — short name shown in admin lists (often Finnish).</li>
+          <li><strong>Main content area</strong> — full written instructions: how to stand, safety notes, what to do. Use the same text participants should read.</li>
+          <li>Scroll to custom fields below the editor (added by Advanced Custom Fields):
+            <ul>
+              <li><strong>Test scale</strong> — which 1–6 reference table to show. Choose one:
+                <ul>
+                  <li><em>Balance</em> — general balance difficulty</li>
+                  <li><em>Eyes</em> — eye-movement tests</li>
+                  <li><em>Coordination</em> — coordination tasks</li>
+                  <li><em>Strength</em> — strength-based tasks</li>
+                  <li><em>Habituation</em> — habituation / adaptation scale</li>
+                </ul>
+                If unsure, use <strong>Balance</strong>.
+              </li>
+              <li><strong>Video</strong> — embed URL and/or upload a demonstration video. At least one video helps participants.</li>
+              <li><strong>Images</strong> — optional step-by-step photos.</li>
+            </ul>
+          </li>
+          <li><strong>Menu order</strong> (right sidebar, under Page Attributes or similar) — controls order in Round 1 when tests are drawn from the general pool. <strong>Higher number = shown earlier</strong> in Round 1.</li>
+          <li>Click <strong>Publish</strong> (or <strong>Update</strong> if editing).</li>
+          <li>Immediately create the matching exercise — see next section.</li>
+        </ol>
+
+        <figure>
+          <img src="assets/01-edit-test-copy-button.png" alt="Edit test screen in WordPress admin" />
+          <figcaption>Editing a published test — content, video, and publish box.</figcaption>
+        </figure>
+
+        <div class="tip">
+          After publishing a test, create its matching exercise with <strong>Copy To excercise</strong> (next section)
+          or run <strong>Bulk copy to exercises</strong> for many tests at once.
+        </div>
+      </section>
+
+      <section id="rating-explained">
+        <h2>Rating scale — how 1–6 works</h2>
+        <p class="lead">
+          The participant chooses the number; the system does not calculate a score from sensors.
+          Their choice is saved once per test per round and drives exercises and next-round tests.
+        </p>
+
+        <h3>What each rating means (balance scale example)</h3>
+        <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Rating</th><th>Label (FI)</th><th>Meaning</th><th>What the system does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>1</strong></td><td>Helppo</td><td>Very easy, little effort</td><td>Test not offered again in later rounds</td></tr>
+            <tr><td><strong>2</strong></td><td>Melko helppo</td><td>Easy with some focus</td><td>Test not offered again in later rounds</td></tr>
+            <tr><td><strong>3</strong></td><td>Kohtalaisen haastava</td><td>Moderate challenge, doable without support</td><td><strong>Counts toward round end (6 needed)</strong>; suggests exercise; priority in next rounds</td></tr>
+            <tr><td><strong>4</strong></td><td>Vaikea</td><td>Hard, may need brief support</td><td><strong>Same as 3</strong> — exercise suggestion + priority re-test</td></tr>
+            <tr><td><strong>5</strong></td><td>Hyvin vaikea</td><td>Very hard, needs support most of the time</td><td>No exercise from this rating alone; test returns in next round for re-testing</td></tr>
+            <tr><td><strong>6</strong></td><td>Mahdoton</td><td>Cannot do safely — red on screen</td><td>Test permanently removed for this participant</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>How ratings are counted during a round</h3>
+        <ul>
+          <li>Each time they finish a test, one rating is stored for that test in the current round.</li>
+          <li>They cannot rate the same test twice in the same round.</li>
+          <li>The system counts how many ratings are <strong>3 or 4</strong> in this round.</li>
+          <li>When that count reaches <strong>6</strong> (default), the round stops — even if they have not done 43 tests yet.</li>
+          <li>Alternatively, the round stops when they complete <strong>43 tests</strong> (Rounds 1–2) or <strong>42 tests</strong> (Round 3), or when no suitable tests remain.</li>
+        </ul>
+
+        <div class="note">
+          <strong>Example:</strong> In Round 1, a participant rates six different tests as 3 or 4. The round ends immediately.
+          You get exercise suggestions for those tests (up to 5 if more than five were rated 3/4 — first five in order count).
+        </div>
+      </section>
+
+      <section id="how-tests-chosen">
+        <h2>How the next test is chosen</h2>
+        <p>The website shows one test at a time. Which test appears next depends on the round.</p>
+
+        <h3>Round 1 — discovery round</h3>
+        <ul>
+          <li>Tests come from your full published library that the participant has not done yet in Round 1.</li>
+          <li>Order follows <strong>menu order</strong> you set on each test (higher number = shown earlier).</li>
+          <li>Tests they rate 1, 2, or 6 will not appear again in later rounds.</li>
+        </ul>
+
+        <h3>Round 2 — re-test priority tests</h3>
+        <ul>
+          <li>First, tests they rated <strong>3, 4, or 5</strong> in Round 1 come back — in the same order they originally rated them.</li>
+          <li>After those are done, other eligible tests may appear from the general pool.</li>
+          <li>Tests rated 1, 2, or 6 in Round 1 stay excluded.</li>
+        </ul>
+
+        <h3>Round 3 — final test round</h3>
+        <ul>
+          <li>Similar priority: tests rated 3, 4, or 5 in earlier rounds are re-tested first (order preserved).</li>
+          <li>Then remaining eligible tests if needed until the round ends.</li>
+        </ul>
+
+        <div class="tip">
+          You can see every rating in <strong>Users Progress → VIEW</strong> — use this if you wonder why a specific test did or did not return.
+        </div>
+      </section>
+
+      <div class="content-group-banner content-group-banner--exercises" id="group-exercises">
+        <div class="content-group-icon" aria-hidden="true">💪</div>
+        <div>
+          <h2>Exercises — complete guide</h2>
+          <p>Everything about creating exercise content, approving suggestions after each round, and showing Harjoitukset to participants. Start with the overview below.</p>
+        </div>
+      </div>
+
+      <section id="exercises-guide" class="section-exercise">
+        <h2>Exercises — overview &amp; workflow <span class="badge badge-admin">Admin</span></h2>
+        <p class="lead">
+          An <strong>exercise</strong> is the training program linked to a balance test. When a participant rates a test as
+          <strong>3 or 4</strong>, the matching exercise can be suggested for them — but only if you created and published it first.
+        </p>
+
+        <h3>The exercise lifecycle (your steps)</h3>
+        <ol>
+          <li><strong>Setup (once)</strong> — For each test, use <strong>Copy To excercise</strong> or <strong>Bulk copy</strong> to create exercise posts. Publish all exercises.</li>
+          <li><strong>After each round</strong> — System suggests up to 5 exercises (from 3/4 ratings). You get an email.</li>
+          <li><strong>Review</strong> — Open Users Progress → VIEW → Exercise assignments. Approve, reorder, or add manually.</li>
+          <li><strong>Publish to participant</strong> — Click <strong>Display exercises</strong>. They see Harjoitukset and get email.</li>
+        </ol>
+
+        <div class="exercise-quicknav" aria-label="Jump to exercise topics">
+          <a href="#copy-exercise">Create from test<span>Copy To excercise button</span></a>
+          <a href="#bulk-copy">Bulk copy<span>Initial library setup</span></a>
+          <a href="#edit-exercise">Edit content<span>Exercises → All Exercises</span></a>
+          <a href="#approve-exercises">Approve<span>Exercise assignments panel</span></a>
+          <a href="#display-to-user">Display<span>Send to participant</span></a>
+          <a href="#harjoitukset">Harjoitukset tab<span>What participant sees</span></a>
+        </div>
+
+        <h3>All exercise screenshots at a glance</h3>
+        <div class="screenshot-grid">
+          <figure>
+            <img src="assets/01b-copy-to-exercise-button.png" alt="Copy To excercise button on test edit screen" />
+            <figcaption>1. Copy To excercise — create exercise from a test</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/03-exercises-list.png" alt="Exercises list in WordPress admin" />
+            <figcaption>2. Exercises list — verify links to tests</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/04-bulk-copy-exercises.png" alt="Bulk copy to exercises admin page" />
+            <figcaption>3. Bulk copy — many tests at once</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/06-user-detail-exercises.png" alt="Exercise assignments approve panel" />
+            <figcaption>4. Approve &amp; reorder in Users Progress</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/06b-user-detail-admin.png" alt="User detail with exercise panel" />
+            <figcaption>5. User detail — limits + assignments</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/10-frontend-exercises.png" alt="Frontend Harjoitukset tab" />
+            <figcaption>6. Participant Harjoitukset tab after display</figcaption>
+          </figure>
+        </div>
+
+        <div class="tip">
+          <strong>Remember:</strong> Approving exercises is not enough — you must click <strong>Display exercises</strong> or the participant will only see a waiting message on Harjoitukset.
+        </div>
+      </section>
+
+      <section id="copy-exercise" class="section-exercise">
+        <h2>Create exercises from tests <span class="badge badge-admin">Admin</span></h2>
+        <p>
+          Each published test needs a linked <strong>exercise</strong>. When a participant rates that test as 3 or 4,
+          the system can suggest that exercise for them. Without a linked exercise, no suggestion is created for that rating.
+        </p>
+
+        <h3>Option A — One test at a time (best for new tests)</h3>
+        <ol>
+          <li>Open <strong>Tests → All Tests</strong> and edit a <strong>published</strong> test.</li>
+          <li>In the right <strong>Publish</strong> box, below the blue <strong>Update</strong> button, click <strong>Copy To excercise</strong>.</li>
+          <li>Confirm. A new exercise opens as a draft with the same title, text, video, and images copied from the test.</li>
+          <li>Read through the exercise, adjust wording if exercises should differ from test instructions, then click <strong>Publish</strong>.</li>
+        </ol>
+
+        <p>The same button appears on the Tests list: hover a row and click <strong>Copy To excercise</strong> in the action links.</p>
+
+        <figure>
+          <img src="assets/01b-copy-to-exercise-button.png" alt="Copy To excercise button location" />
+          <figcaption>The Copy To excercise button appears below Update in the Publish box (published tests only).</figcaption>
+        </figure>
+
+        <h3>How to check the link is correct</h3>
+        <ul>
+          <li>On <strong>Tests → All Tests</strong>, columns <strong>Identifier</strong> and <strong>Linked test</strong> help you verify links.</li>
+          <li>On <strong>Exercises → All Exercises</strong>, each row shows which test it came from.</li>
+          <li>An automatic ID (e.g. TEST-72) is assigned when needed so you can find exercises quickly when adding them manually later.</li>
+        </ul>
+
+        <figure>
+          <img src="assets/03-exercises-list.png" alt="Exercises list in admin" />
+          <figcaption>Exercises list — each row shows identifier and linked test ID.</figcaption>
+        </figure>
+      </section>
+
+      <section id="bulk-copy" class="section-exercise">
+        <h2>Bulk copy (initial setup) <span class="badge badge-admin">Admin</span></h2>
+        <p>Use this once during initial setup or when many tests still lack exercises.</p>
+        <ol>
+          <li>Go to <strong>Tests → Bulk copy to exercises</strong>.</li>
+          <li>Review the stats: published tests, already linked, ready to copy.</li>
+          <li>Click <strong>Run bulk copy</strong>. Only tests without a linked exercise are copied.</li>
+          <li>Open <strong>View exercises</strong> to review and publish new exercise posts.</li>
+        </ol>
+
+        <figure>
+          <img src="assets/04-bulk-copy-exercises.png" alt="Bulk copy to exercises admin page" />
+          <figcaption>Bulk copy screen with stats and Run bulk copy button.</figcaption>
+        </figure>
+
+        <div class="warn">
+          Safe to re-run: already-linked tests are skipped. Publish exercise drafts after bulk copy.
+        </div>
+      </section>
+
+      <section id="edit-exercise" class="section-exercise">
+        <h2>Edit an exercise <span class="badge badge-admin">Admin</span></h2>
+        <p>You can change exercise content anytime without affecting past participant ratings.</p>
+        <ol>
+          <li>Go to <strong>Exercises → All Exercises</strong>.</li>
+          <li>Click the exercise title to edit.</li>
+          <li>Update title, instructions, video, or images — same fields as tests.</li>
+          <li>Click <strong>Update</strong>.</li>
+        </ol>
+        <div class="note">
+          Changing an exercise updates what <strong>future</strong> participants see when that exercise is displayed.
+          If someone already has that exercise visible, they see the updated content on their next visit.
+        </div>
+        <div class="warn">
+          <strong>Copy To excercise</strong> only appears on <strong>published</strong> tests. Draft or trashed tests do not show the button.
+        </div>
+      </section>
+
+      <section id="approve-exercises" class="section-exercise">
+        <h2>Approve exercise suggestions <span class="badge badge-admin">Admin</span></h2>
+        <p>
+          When a user <strong>completes a test round</strong>, the plugin auto-suggests up to
+          <strong>5 exercises per round</strong> — one per distinct test rated <strong>3 or 4</strong>
+          that has a linked exercise post.
+        </p>
+
+        <h3>What the statuses mean</h3>
+        <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Status</th><th>What it means for you</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Suggested</strong></td><td>System created this row automatically — review and approve or delete.</td></tr>
+            <tr><td><strong>Approved</strong></td><td>You accepted it — ready to show the participant when you click Display exercises.</td></tr>
+            <tr><td><strong>Visible</strong></td><td>Participant can see it on the Harjoitukset tab.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>How suggestions are built</h3>
+        <ul>
+          <li>When a round ends, the system looks at every test the participant rated <strong>3 or 4</strong> in that round.</li>
+          <li>For each such test (in the order they rated them), it adds the linked exercise — up to <strong>5 exercises total per round</strong>.</li>
+          <li>If they rated a test 3 or 4 but that test has <strong>no linked exercise</strong>, that rating is skipped (no row created).</li>
+          <li>If they had no 3 or 4 ratings in the round, <strong>no suggestions</strong> are created — you may add exercises manually.</li>
+        </ul>
+
+        <h3>Your review steps</h3>
+        <ol>
+          <li>Open <strong>Tests → Users Progress → VIEW</strong> for the participant.</li>
+          <li>Open the <strong>Exercise assignments</strong> panel and select the correct round tab (Round 1, 2, or 3).</li>
+          <li>Read each suggested row. Click <strong>Approve</strong> on good ones, or delete rows you do not want.</li>
+          <li>Or click <strong>Approve all suggested</strong> to accept every suggestion at once.</li>
+          <li><strong>Reorder</strong> using ↑ ↓ arrows or drag — top row = first exercise the participant sees.</li>
+          <li><strong>Add manually</strong> if needed: search by exercise name or ID; manually added exercises are approved automatically.</li>
+        </ol>
+
+        <figure>
+          <img src="assets/06-user-detail-exercises.png" alt="Exercise assignments panel detail" />
+          <figcaption>Exercise assignments — approve, reorder, and round tabs.</figcaption>
+        </figure>
+
+        <div class="note">
+          You receive an email to <strong>review suggested exercises</strong> when suggestions are created (once per participant per round).
+        </div>
+      </section>
+
+      <section id="display-to-user" class="section-exercise">
+        <h2>Display exercises to the participant <span class="badge badge-admin">Admin</span></h2>
+        <p class="lead">Approving exercises prepares them; <strong>Display exercises</strong> is what actually shows them on the website and sends the participant an email.</p>
+
+        <ol>
+          <li>In Users Progress → user detail, make sure at least one exercise is <strong>Approved</strong>.</li>
+          <li>Click the blue <strong>Display exercises</strong> button.</li>
+          <li>The participant receives email: <em>Harjoituksesi ovat valmiina</em> (Your exercises are ready).</li>
+          <li>On their account, the <strong>Harjoitukset</strong> tab lists exercises in your chosen order.</li>
+          <li>A countdown shows recommended days left to do exercises (default 12 days from Settings).</li>
+        </ol>
+
+        <h3>Hide exercises again</h3>
+        <p>Click <strong>Exercises invisible</strong> to hide them from the participant without deleting your approved list. You can display again later.</p>
+
+        <div class="tip">
+          <strong>Checklist after displaying:</strong> Log in as the participant (or ask them) and confirm Harjoitukset shows the correct exercises and videos play.
+        </div>
+      </section>
+
+      <section id="harjoitukset" class="section-exercise">
+        <h2>Harjoitukset — participant view <span class="badge badge-user">Participant</span></h2>
+        <p>
+          Before you click <strong>Display exercises</strong>, this tab shows a waiting message.
+          After you display, they see their personal program in the order you set.
+        </p>
+
+        <ol>
+          <li>Open <strong>Harjoitukset</strong> on their account (/bt-user-account/).</li>
+          <li>Read the countdown: <em>X päivää jäljellä suositellusta ajasta tehdä harjoituksia</em>.</li>
+          <li>Follow each exercise in your chosen order (video + instructions).</li>
+          <li>At 0 days, exercises <strong>remain visible</strong> — they are not hidden automatically.</li>
+        </ol>
+
+        <figure>
+          <img src="assets/10-frontend-exercises.png" alt="Frontend Harjoitukset tab with exercise content" />
+          <figcaption>Harjoitukset tab with countdown and exercise instructions — what the participant sees after you click Display exercises.</figcaption>
+        </figure>
+      </section>
+
+      <section id="settings" class="section-exercise">
+        <h2>Exercise countdown &amp; timing <span class="badge badge-admin">Admin</span></h2>
+        <p>Go to <strong>Tests → Settings</strong> to control round email delays and the Harjoitukset countdown.</p>
+
+        <figure>
+          <img src="assets/07-settings.png" alt="Tests Settings page" />
+          <figcaption>Round invite schedule settings and exercise recommended period.</figcaption>
+        </figure>
+
+        <h3>Round invite schedule</h3>
+        <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Setting</th><th>Default</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Round 2 invite delay</td><td>12 days</td><td>After Round 1 ends, when participant gets email for progress + Round 2 tests</td></tr>
+            <tr><td>Round 3 invite delay</td><td>12 days</td><td>Same after Round 2</td></tr>
+            <tr><td>Round 4 / final invite delay</td><td>12 days</td><td>After Round 3 — final progress questionnaire</td></tr>
+            <tr><td>Auto access delay</td><td>10 days</td><td>Participant can open progress form automatically even without clicking email (optional path)</td></tr>
+            <tr><td>Exercise recommended period</td><td>12 days</td><td>Countdown on Harjoitukset tab (“X days left…”). At zero, exercises stay visible.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>Reset one participant (support only)</h3>
+        <p>
+          At the bottom of Settings, if you need to wipe one person’s test history (e.g. restart their course),
+          enter their user ID and click <strong>Clear Test</strong>. Use carefully — ratings and progress are deleted.
+        </p>
+      </section>
+
+      <div class="content-group-banner content-group-banner--participants" id="group-participants">
+        <div class="content-group-icon" aria-hidden="true">👤</div>
+        <div>
+          <h2>Participants &amp; progress</h2>
+          <p>Add course members and follow their rounds, ratings, and exercise assignments.</p>
+        </div>
+      </div>
+
+      <section id="create-users">
+        <h2>Add course participants <span class="badge badge-admin">Admin</span></h2>
+        <p>Participants do not sign up on the website themselves. You create each account in WordPress.</p>
+        <ol>
+          <li>In WordPress admin, go to <strong>Users → Add New</strong>.</li>
+          <li>Choose a <strong>username</strong> and <strong>password</strong> (or generate a strong password).</li>
+          <li>Enter their <strong>email</strong> — used for round invitations and “exercises ready” messages.</li>
+          <li>Role: usually <strong>Subscriber</strong> (normal course participant).</li>
+          <li>Click <strong>Add New User</strong>.</li>
+          <li>Send the participant:
+            <ul>
+              <li>Login page: your site + <strong>/omatestaus/</strong></li>
+              <li>Their username and password (secure channel)</li>
+            </ul>
+          </li>
+        </ol>
+        <div class="note">
+          After first login they land on <strong>/bt-user-account/</strong>, complete <strong>Alkukysely</strong> (initial questionnaire),
+          then can open <strong>Tasapainotestit</strong>.
+        </div>
+      </section>
+
+      <section id="users-progress">
+        <h2>Users Progress dashboard <span class="badge badge-admin">Admin</span></h2>
+        <p>
+          <strong>Tests → Users Progress</strong> is the main dashboard for following each participant.
+        </p>
+
+        <figure>
+          <img src="assets/05-users-progress-list.png" alt="Users Progress list" />
+          <figcaption>User list with round numbers and View action.</figcaption>
+        </figure>
+
+        <h3>Open a user</h3>
+        <ol>
+          <li>Click <strong>VIEW</strong> on a user row.</li>
+          <li>The detail page shows:
+            <ul>
+              <li>Progress summary and ratings history</li>
+              <li><strong>Per-round test limits</strong> (optional overrides)</li>
+              <li><strong>Exercise assignments</strong> (approve, reorder, display)</li>
+            </ul>
+          </li>
+        </ol>
+
+        <figure>
+          <img src="assets/06b-user-detail-admin.png" alt="User detail with exercise assignments panel" />
+          <figcaption>User detail — per-round limits and Exercise assignments panel.</figcaption>
+        </figure>
+
+        <h3>Per-round limits (optional, per participant)</h3>
+        <p>Most users use defaults. You can override for one person if clinically needed:</p>
+        <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Max tests (round 1–2)</td><td>43</td><td>Maximum tests user can complete in that round</td></tr>
+            <tr><td>Max tests (round 3)</td><td>42</td><td>Same for final test round</td></tr>
+            <tr><td>3/4 threshold</td><td>6</td><td>How many ratings of 3 or 4 end the round early (also triggers a notice to you if below this when round ends)</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p>Click <strong>Save limits</strong> or <strong>Clear overrides</strong> to return to defaults.</p>
+      </section>
+
+      <div class="content-group-banner content-group-banner--site" id="group-site">
+        <div class="content-group-icon" aria-hidden="true">🌐</div>
+        <div>
+          <h2>Participant website</h2>
+          <p>What course members see when they log in — login, account menu, tests, and progress forms.</p>
+        </div>
+      </div>
+
+      <section id="frontend">
+        <h2>Participant experience — overview</h2>
+        <p class="lead">
+          This is what your course members see after you give them a login. They use the public website — not the WordPress admin.
+        </p>
+      </section>
+
+      <section id="login">
+        <h2>Login <span class="badge badge-user">Participant</span></h2>
+        <ol>
+          <li>Open the login page: your website address + <strong>/omatestaus/</strong></li>
+          <li>Enter the username and password you created for them.</li>
+          <li>After login they go to <strong>/bt-user-account/</strong> (Käyttäjätili).</li>
+          <li><strong>Forgot password</strong> works on the same page — they do not use a separate WordPress login screen.</li>
+        </ol>
+      </section>
+
+      <section id="account-nav">
+        <h2>Account menu <span class="badge badge-user">Participant</span></h2>
+        <p>After completing <strong>Alkukysely</strong> (first-time questionnaire), the left menu shows:</p>
+        <ol>
+          <li><strong>Tasapainotestit</strong> — do balance tests and give 1–6 ratings</li>
+          <li><strong>Harjoitukset</strong> — personal exercise program (after you display it)</li>
+          <li><strong>Seuraa edistymistä</strong> — progress check-in forms between rounds</li>
+        </ol>
+
+        <figure>
+          <img src="assets/08-frontend-account-nav.png" alt="Frontend user account with sidebar navigation" />
+          <figcaption>User account sidebar — Tasapainotestit, Harjoitukset, Seuraa edistymistä.</figcaption>
+        </figure>
+      </section>
+
+      <section id="balance-tests">
+        <h2>Tasapainotestit (balance tests tab) <span class="badge badge-user">Participant</span></h2>
+        <p>One test is shown at a time. The participant should read instructions, watch the video, perform the test safely, then choose how difficult it felt.</p>
+        <ol>
+          <li>Open <strong>Tasapainotestit</strong>.</li>
+          <li>Read instructions and watch the demonstration video.</li>
+          <li>Perform the test (have support nearby if needed).</li>
+          <li>Tap a number <strong>1–6</strong> that matches the reference table on screen.</li>
+          <li>Click <strong>Seuraava testi</strong> (next test) to continue.</li>
+        </ol>
+
+        <p>
+          The reference table depends on the test type you chose when creating the test (balance, eyes, coordination, strength, or habituation).
+          Level <strong>6 — Mahdoton</strong> is shown in red — means the test felt impossible or unsafe to attempt.
+        </p>
+
+        <h3>When their round ends</h3>
+        <p>They see a thank-you screen. They cannot start new tests until the next round opens (via email after the waiting period). They should:</p>
+        <ul>
+          <li>Wait for your email when exercises are ready (after you click Display exercises).</li>
+          <li>Wait for the next-round invitation email (~12 days by default).</li>
+        </ul>
+
+        <figure>
+          <img src="assets/09-frontend-balance-tests.png" alt="Round complete message on balance tests tab" />
+          <figcaption>Example: round complete — user waits for exercises and next-round email.</figcaption>
+        </figure>
+      </section>
+
+      <section id="progress">
+        <h2>Progress check-in (Seuraa edistymistä) <span class="badge badge-user">Participant</span></h2>
+        <p>
+          Opens when they receive the scheduled email between rounds (or when auto-access time is reached).
+          Answers appear in Users Progress when you view that participant.
+        </p>
+        <ul>
+          <li><strong>Symptom strength</strong> (0–10) — oireiden voimakkuus</li>
+          <li><strong>Impact on function</strong> (0–10) — vaikutus toimintakykyyn</li>
+          <li><strong>Exercise days per week</strong> (1–5)</li>
+          <li><strong>Exercise frequency per day</strong> (1–4)</li>
+        </ul>
+        <p>Submit with <strong>Lähetä lomake</strong>. Answers appear in admin user detail progress tables.</p>
+      </section>
+
+      <div class="content-group-banner content-group-banner--reference" id="group-system">
+        <div class="content-group-icon" aria-hidden="true">📅</div>
+        <div>
+          <h2>Rounds &amp; emails</h2>
+          <p>When test rounds start and end, and which emails you and participants receive.</p>
+        </div>
+      </div>
+
+      <section id="rounds">
+        <h2>When rounds start and end</h2>
+
+        <h3>Three ways a round can end</h3>
+        <ol>
+          <li><strong>Six ratings of 3 or 4</strong> — most common early finish (default threshold: 6).</li>
+          <li><strong>Maximum tests reached</strong> — 43 in Round 1, 43 in Round 2, 42 in Round 3.</li>
+          <li><strong>No tests left</strong> — every remaining test is excluded (all rated easy, impossible, or already done).</li>
+        </ol>
+
+        <h3>What happens immediately when a round ends</h3>
+        <ul>
+          <li>Participant sees “round complete” on Tasapainotestit — no more tests until next round email.</li>
+          <li>Up to 5 exercises suggested from 3/4 ratings (if linked exercises exist).</li>
+          <li>You receive email to review exercises.</li>
+          <li>Next-round participant email is scheduled (default 12 days later).</li>
+          <li>If they had fewer than six 3/4 ratings, you also get a low-rating notice — the course still continues; follow-up email is still sent.</li>
+        </ul>
+
+        <h3>Full round timeline</h3>
+        <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Stage</th><th>Participant</th><th>You (admin)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Round 1</strong></td><td>Alkukysely → rate many tests</td><td>Approve &amp; display exercises</td></tr>
+            <tr><td><strong>Wait ~12 days</strong></td><td>Do Harjoitukset, get email</td><td>Monitor progress in Users Progress</td></tr>
+            <tr><td><strong>Round 2</strong></td><td>Progress form + re-test priority tests</td><td>Approve &amp; display new exercises</td></tr>
+            <tr><td><strong>Wait ~12 days</strong></td><td>Same pattern</td><td>Same</td></tr>
+            <tr><td><strong>Round 3</strong></td><td>Final test round</td><td>Final exercise approval &amp; display</td></tr>
+            <tr><td><strong>After Round 3</strong></td><td>Final progress questionnaire</td><td>Review outcomes in user detail</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <section id="notifications">
+        <h2>Emails you and participants receive</h2>
+        <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Email</th><th>Recipient</th><th>When</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Round 2 / 3 / 4 invite</td>
+              <td>User</td>
+              <td>After round ends; delay from Settings (default 12 days). Includes login link.</td>
+            </tr>
+            <tr>
+              <td>Low 3/4 count notice</td>
+              <td>You (admin)</td>
+              <td>Round ended with fewer than six ratings of 3 or 4 — informational; course still continues.</td>
+            </tr>
+            <tr>
+              <td>Review suggested exercises</td>
+              <td>You (admin)</td>
+              <td>When automatic exercise suggestions are created — go to Users Progress.</td>
+            </tr>
+            <tr>
+              <td>Harjoituksesi ovat valmiina</td>
+              <td>Participant</td>
+              <td>When you click Display exercises.</td>
+            </tr>
+            <tr>
+              <td>Round completed notice</td>
+              <td>You (admin)</td>
+              <td>When a participant finishes a test round.</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <div class="content-group-banner content-group-banner--reference" id="group-reference">
+        <div class="content-group-icon" aria-hidden="true">❓</div>
+        <div>
+          <h2>Help &amp; checklists</h2>
+          <p>Common questions and step-by-step lists for setup and after each round.</p>
+        </div>
+      </div>
+
+      <section id="faq">
+        <h2>FAQ &amp; troubleshooting</h2>
+
+        <h3>No exercise suggestions appeared</h3>
+        <ul>
+          <li>Participant had no ratings of 3 or 4 in that round, or</li>
+          <li>Those tests do not have a published linked exercise — fix by creating/publishing exercises and linking via Copy To excercise.</li>
+        </ul>
+
+        <h3>Harjoitukset is empty for the participant</h3>
+        <ul>
+          <li>You approved exercises but did not click <strong>Display exercises</strong>, or</li>
+          <li>You clicked <strong>Exercises invisible</strong> — display again to show them.</li>
+        </ul>
+
+        <h3>Copy To excercise button missing</h3>
+        <ul>
+          <li>Test must be <strong>Published</strong> (not draft or trash).</li>
+          <li>An exercise may already exist — check Exercises list and Linked test column.</li>
+        </ul>
+
+        <h3>Participant says they cannot start next test</h3>
+        <ul>
+          <li>Their round may be complete — check Users Progress for current round and rating count.</li>
+          <li>They may have already rated that test this round — system shows a Finnish message preventing duplicate ratings.</li>
+          <li>Next round opens via scheduled email after the waiting period.</li>
+        </ul>
+
+        <h3>Wrong exercise order on frontend</h3>
+        <p>Reorder in Exercise assignments before or after displaying — order in the admin panel is the order on Harjoitukset.</p>
+
+        <h3>Want to restart one participant from scratch</h3>
+        <p>Tests → Settings → enter their user ID → Clear Test. Only use when you intentionally reset their course data.</p>
+      </section>
+
+      <section id="checklist">
+        <h2>Quick checklists</h2>
+
+        <h3>Before the course goes live</h3>
+        <ol>
+          <li>Create and publish all balance tests (video, instructions, test scale).</li>
+          <li>Create and publish all exercises (Bulk copy or Copy To excercise per test).</li>
+          <li>Check Tests and Exercises lists — every test should show a linked exercise.</li>
+          <li>Set timing in Tests → Settings (delays, exercise countdown).</li>
+          <li>Create participant accounts in Users → Add New.</li>
+          <li>Send each participant the login URL and credentials.</li>
+        </ol>
+
+        <h3>Every time a participant finishes a round</h3>
+        <ol>
+          <li>Check your email for exercise review request.</li>
+          <li>Tests → Users Progress → VIEW.</li>
+          <li>Approve, reorder, add or remove exercises.</li>
+          <li>Click <strong>Display exercises</strong>.</li>
+          <li>Confirm Harjoitukset looks correct (log in as them or ask them to check).</li>
+        </ol>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    Parempi tasapaino — Balance Testing · Complete administrator guide · Updated June 2026
+  </footer>
+
+  <script>
+    (function () {
+      var tocNav = document.getElementById('toc-nav');
+      var tocToggle = document.getElementById('toc-toggle');
+      if (tocToggle && tocNav) {
+        tocToggle.addEventListener('click', function () {
+          var collapsed = tocNav.classList.toggle('collapsed');
+          tocToggle.textContent = collapsed ? 'Show contents' : 'Hide contents';
+          tocToggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+          if (!collapsed) updateTocScrollHint();
+        });
+        if (window.matchMedia('(min-width: 961px)').matches) {
+          tocNav.classList.remove('collapsed');
+          tocToggle.textContent = 'Hide contents';
+          tocToggle.setAttribute('aria-expanded', 'true');
+        }
+      }
+
+      var tocLinks = Array.prototype.slice.call(document.querySelectorAll('.toc-link'));
+      var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
+
+      function setActiveSection(id) {
+        tocLinks.forEach(function (link) {
+          link.classList.toggle('active', link.getAttribute('data-section') === id);
+        });
+        var activeLink = document.querySelector('.toc-link.active');
+        var groups = document.querySelectorAll('.toc-group');
+        groups.forEach(function (group) { group.classList.remove('is-active'); });
+        if (activeLink) {
+          var parentGroup = activeLink.closest('.toc-group');
+          if (parentGroup) parentGroup.classList.add('is-active');
+        }
+        scrollActiveTocLinkIntoView();
+        updateTocScrollHint();
+      }
+
+      function scrollActiveTocLinkIntoView() {
+        var scrollEl = document.getElementById('toc-nav-scroll');
+        var active = document.querySelector('.toc-link.active');
+        if (!scrollEl || !active) return;
+        var linkRect = active.getBoundingClientRect();
+        var scrollRect = scrollEl.getBoundingClientRect();
+        var relativeTop = linkRect.top - scrollRect.top + scrollEl.scrollTop;
+        var target = relativeTop - scrollEl.clientHeight / 2 + active.offsetHeight / 2;
+        if (relativeTop < scrollEl.scrollTop + 8 || relativeTop + active.offsetHeight > scrollEl.scrollTop + scrollEl.clientHeight - 8) {
+          scrollEl.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+        }
+      }
+
+      function updateTocScrollHint() {
+        var scrollEl = document.getElementById('toc-nav-scroll');
+        var hint = document.getElementById('toc-scroll-hint');
+        if (!scrollEl || !hint) return;
+        var canScroll = scrollEl.scrollHeight > scrollEl.clientHeight + 4;
+        var atBottom = scrollEl.scrollTop + scrollEl.clientHeight >= scrollEl.scrollHeight - 8;
+        hint.style.display = canScroll && !atBottom ? 'block' : 'none';
+      }
+
+      var tocScrollEl = document.getElementById('toc-nav-scroll');
+      if (tocScrollEl) {
+        tocScrollEl.addEventListener('scroll', updateTocScrollHint, { passive: true });
+        window.addEventListener('resize', updateTocScrollHint);
+        updateTocScrollHint();
+      }
+
+      tocLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          setActiveSection(link.getAttribute('data-section'));
+          if (tocNav && window.matchMedia('(max-width: 960px)').matches) {
+            tocNav.classList.add('collapsed');
+            if (tocToggle) {
+              tocToggle.textContent = 'Show contents';
+              tocToggle.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      });
+
+      if ('IntersectionObserver' in window && sections.length) {
+        var observer = new IntersectionObserver(
+          function (entries) {
+            var visible = entries
+              .filter(function (e) { return e.isIntersecting; })
+              .sort(function (a, b) { return b.intersectionRatio - a.intersectionRatio; });
+            if (visible.length) {
+              setActiveSection(visible[0].target.id);
+            }
+          },
+          { rootMargin: '-20% 0px -55% 0px', threshold: [0.1, 0.25, 0.5] }
+        );
+        sections.forEach(function (section) { observer.observe(section); });
+      }
+
+      var searchIndex = sections.map(function (section) {
+        var heading = section.querySelector('h2');
+        var title = heading ? heading.textContent.replace(/\s+/g, ' ').trim() : section.id;
+        var keywords = Array.prototype.slice.call(section.querySelectorAll('h2, h3, h4, strong, li, td'))
+          .map(function (el) { return el.textContent; })
+          .join(' ');
+        return {
+          id: section.id,
+          title: title,
+          text: (title + ' ' + keywords + ' ' + section.textContent).toLowerCase()
+        };
+      });
+
+      function scoreItem(item, query) {
+        var q = query.toLowerCase().trim();
+        if (!q) return 0;
+        var title = item.title.toLowerCase();
+        if (title.indexOf(q) === 0) return 100;
+        if (title.indexOf(q) !== -1) return 80;
+        if (item.id.indexOf(q) !== -1) return 70;
+        if (item.text.indexOf(q) !== -1) return 50;
+        var words = q.split(/\s+/).filter(Boolean);
+        var wordHits = words.filter(function (w) { return item.text.indexOf(w) !== -1; }).length;
+        return wordHits ? 20 + wordHits * 10 : 0;
+      }
+
+      function navigateTo(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        setActiveSection(id);
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', '#' + id);
+      }
+
+      function setupSearch(input, resultsEl) {
+        var focusedIndex = -1;
+
+        function renderResults(query) {
+          focusedIndex = -1;
+          resultsEl.innerHTML = '';
+          if (!query.trim()) {
+            resultsEl.classList.remove('open');
+            return;
+          }
+          var matches = searchIndex
+            .map(function (item) { return { item: item, score: scoreItem(item, query) }; })
+            .filter(function (row) { return row.score > 0; })
+            .sort(function (a, b) { return b.score - a.score; })
+            .slice(0, 8);
+
+          if (!matches.length) {
+            resultsEl.innerHTML = '<div class="search-empty">No matching sections. Try “exercise”, “approve”, or “email”.</div>';
+            resultsEl.classList.add('open');
+            return;
+          }
+
+          matches.forEach(function (row, index) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.setAttribute('role', 'option');
+            btn.innerHTML = '<span class="sr-title">' + row.item.title + '</span><span class="sr-meta">Jump to section</span>';
+            btn.addEventListener('click', function () {
+              input.value = '';
+              resultsEl.classList.remove('open');
+              navigateTo(row.item.id);
+            });
+            btn.addEventListener('mouseenter', function () {
+              focusedIndex = index;
+              highlightFocused(resultsEl);
+            });
+            resultsEl.appendChild(btn);
+          });
+          resultsEl.classList.add('open');
+        }
+
+        function highlightFocused(container) {
+          var buttons = container.querySelectorAll('button');
+          Array.prototype.forEach.call(buttons, function (btn, i) {
+            btn.classList.toggle('focused', i === focusedIndex);
+          });
+        }
+
+        input.addEventListener('input', function () {
+          renderResults(input.value);
+        });
+
+        input.addEventListener('keydown', function (e) {
+          var buttons = resultsEl.querySelectorAll('button');
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (!resultsEl.classList.contains('open')) renderResults(input.value);
+            focusedIndex = Math.min(focusedIndex + 1, buttons.length - 1);
+            highlightFocused(resultsEl);
+          } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            focusedIndex = Math.max(focusedIndex - 1, 0);
+            highlightFocused(resultsEl);
+          } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (focusedIndex >= 0 && buttons[focusedIndex]) {
+              buttons[focusedIndex].click();
+            } else if (buttons.length === 1) {
+              buttons[0].click();
+            }
+          } else if (e.key === 'Escape') {
+            resultsEl.classList.remove('open');
+            input.blur();
+          }
+        });
+
+        input.addEventListener('focus', function () {
+          if (input.value.trim()) renderResults(input.value);
+        });
+      }
+
+      setupSearch(document.getElementById('hero-search'), document.getElementById('hero-search-results'));
+      setupSearch(document.getElementById('sidebar-search'), document.getElementById('sidebar-search-results'));
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.hero-search') && !e.target.closest('.toc-search')) {
+          document.querySelectorAll('.search-results.open').forEach(function (el) {
+            el.classList.remove('open');
+          });
+        }
+      });
+
+      var hash = window.location.hash.replace('#', '');
+      if (hash) setActiveSection(hash);
+      else if (sections[0]) setActiveSection(sections[0].id);
+    })();
+  </script>
+
+</body>
+</html>
