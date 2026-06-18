@@ -84,9 +84,12 @@
       color: rgba(255, 255, 255, 0.85);
       margin-bottom: 8px;
     }
+    .hero-search-field {
+      position: relative;
+    }
     .hero-search input {
       width: 100%;
-      padding: 12px 14px 12px 40px;
+      padding: 12px 14px 12px 42px;
       border: 1px solid rgba(255, 255, 255, 0.35);
       border-radius: 10px;
       background: rgba(255, 255, 255, 0.95);
@@ -102,10 +105,22 @@
     .hero-search-icon {
       position: absolute;
       left: 14px;
-      bottom: 14px;
-      color: var(--muted);
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
       pointer-events: none;
-      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      line-height: 0;
+    }
+    .hero-search-icon svg,
+    .toc-search-icon svg {
+      width: 16px;
+      height: 16px;
+      display: block;
     }
     .search-results {
       position: absolute;
@@ -268,7 +283,7 @@
     }
     nav.toc .toc-search input {
       width: 100%;
-      padding: 11px 12px 11px 36px;
+      padding: 11px 12px 11px 40px;
       border: 1px solid #cbd5e1;
       border-radius: 10px;
       font-size: 0.9rem;
@@ -287,13 +302,17 @@
     }
     nav.toc .toc-search-icon {
       position: absolute;
-      left: 12px;
+      left: 13px;
       top: 50%;
       transform: translateY(-50%);
       color: #64748b;
-      font-size: 0.95rem;
       pointer-events: none;
-      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      line-height: 0;
     }
     nav.toc .toc-search .search-results {
       top: calc(100% + 6px);
@@ -334,6 +353,7 @@
       color: var(--g-active-text);
       font-weight: 600;
       border-left-color: var(--g-active-border);
+      box-shadow: inset 0 0 0 1px var(--g-active-ring-soft, transparent);
     }
     nav.toc .toc-group.is-active {
       border-color: var(--g-active-ring);
@@ -346,13 +366,14 @@
       --g-inset: rgba(100, 116, 139, 0.08);
       --g-label: #475569;
       --g-label-line: rgba(71, 85, 105, 0.15);
-      --g-hover-bg: rgba(100, 116, 139, 0.14);
+      --g-hover-bg: rgba(100, 116, 139, 0.1);
       --g-hover-text: #1e293b;
       --g-hover-border: #94a3b8;
-      --g-active-bg: #e2e8f0;
+      --g-active-bg: rgba(100, 116, 139, 0.16);
       --g-active-text: #0f172a;
       --g-active-border: #64748b;
       --g-active-ring: #94a3b8;
+      --g-active-ring-soft: rgba(100, 116, 139, 0.2);
     }
     nav.toc .toc-group--tests {
       --g-bg: linear-gradient(165deg, #eff6ff 0%, #dbeafe 100%);
@@ -360,13 +381,14 @@
       --g-inset: rgba(37, 99, 235, 0.1);
       --g-label: #1d4ed8;
       --g-label-line: rgba(29, 78, 216, 0.15);
-      --g-hover-bg: rgba(59, 130, 246, 0.18);
+      --g-hover-bg: rgba(59, 130, 246, 0.12);
       --g-hover-text: #1e3a8a;
       --g-hover-border: #60a5fa;
-      --g-active-bg: #bfdbfe;
+      --g-active-bg: rgba(59, 130, 246, 0.18);
       --g-active-text: #1e3a8a;
       --g-active-border: #2563eb;
       --g-active-ring: #3b82f6;
+      --g-active-ring-soft: rgba(59, 130, 246, 0.22);
     }
     nav.toc .toc-group--exercises {
       --g-bg: linear-gradient(165deg, #ecfdf5 0%, #d1fae5 100%);
@@ -374,13 +396,14 @@
       --g-inset: rgba(16, 185, 129, 0.12);
       --g-label: #047857;
       --g-label-line: rgba(4, 120, 87, 0.18);
-      --g-hover-bg: rgba(16, 185, 129, 0.2);
+      --g-hover-bg: rgba(16, 185, 129, 0.12);
       --g-hover-text: #064e3b;
       --g-hover-border: #34d399;
-      --g-active-bg: #a7f3d0;
+      --g-active-bg: rgba(16, 185, 129, 0.2);
       --g-active-text: #065f46;
       --g-active-border: #059669;
       --g-active-ring: #10b981;
+      --g-active-ring-soft: rgba(16, 185, 129, 0.24);
     }
     nav.toc .toc-group--participants {
       --g-bg: linear-gradient(165deg, #faf5ff 0%, #ede9fe 100%);
@@ -388,13 +411,14 @@
       --g-inset: rgba(124, 58, 237, 0.1);
       --g-label: #6d28d9;
       --g-label-line: rgba(109, 40, 217, 0.15);
-      --g-hover-bg: rgba(139, 92, 246, 0.18);
+      --g-hover-bg: rgba(139, 92, 246, 0.12);
       --g-hover-text: #4c1d95;
       --g-hover-border: #a78bfa;
-      --g-active-bg: #ddd6fe;
+      --g-active-bg: rgba(139, 92, 246, 0.18);
       --g-active-text: #5b21b6;
       --g-active-border: #7c3aed;
       --g-active-ring: #8b5cf6;
+      --g-active-ring-soft: rgba(139, 92, 246, 0.22);
     }
     nav.toc .toc-group--site {
       --g-bg: linear-gradient(165deg, #fff7ed 0%, #ffedd5 100%);
@@ -402,13 +426,14 @@
       --g-inset: rgba(234, 88, 12, 0.1);
       --g-label: #c2410c;
       --g-label-line: rgba(194, 65, 12, 0.15);
-      --g-hover-bg: rgba(249, 115, 22, 0.16);
+      --g-hover-bg: rgba(249, 115, 22, 0.12);
       --g-hover-text: #9a3412;
       --g-hover-border: #fb923c;
-      --g-active-bg: #fed7aa;
+      --g-active-bg: rgba(249, 115, 22, 0.16);
       --g-active-text: #9a3412;
       --g-active-border: #ea580c;
       --g-active-ring: #f97316;
+      --g-active-ring-soft: rgba(249, 115, 22, 0.22);
     }
     nav.toc .toc-group--system {
       --g-bg: linear-gradient(165deg, #ecfeff 0%, #cffafe 100%);
@@ -416,13 +441,14 @@
       --g-inset: rgba(6, 182, 212, 0.1);
       --g-label: #0e7490;
       --g-label-line: rgba(14, 116, 144, 0.15);
-      --g-hover-bg: rgba(6, 182, 212, 0.16);
+      --g-hover-bg: rgba(6, 182, 212, 0.12);
       --g-hover-text: #164e63;
       --g-hover-border: #22d3ee;
-      --g-active-bg: #a5f3fc;
+      --g-active-bg: rgba(6, 182, 212, 0.16);
       --g-active-text: #155e75;
       --g-active-border: #0891b2;
       --g-active-ring: #06b6d4;
+      --g-active-ring-soft: rgba(6, 182, 212, 0.22);
     }
     nav.toc .toc-group--reference {
       --g-bg: linear-gradient(165deg, #fefce8 0%, #fef9c3 100%);
@@ -430,13 +456,14 @@
       --g-inset: rgba(202, 138, 4, 0.1);
       --g-label: #a16207;
       --g-label-line: rgba(161, 98, 7, 0.15);
-      --g-hover-bg: rgba(234, 179, 8, 0.18);
+      --g-hover-bg: rgba(234, 179, 8, 0.12);
       --g-hover-text: #854d0e;
       --g-hover-border: #facc15;
-      --g-active-bg: #fef08a;
+      --g-active-bg: rgba(234, 179, 8, 0.18);
       --g-active-text: #713f12;
       --g-active-border: #ca8a04;
       --g-active-ring: #eab308;
+      --g-active-ring-soft: rgba(234, 179, 8, 0.24);
     }
 
     .content-group-banner {
@@ -761,7 +788,7 @@
       }
       section { padding: 18px 14px; margin-bottom: 16px; }
       th, td { padding: 8px 10px; font-size: 0.88rem; }
-      .hero-search-icon { bottom: 13px; }
+      .hero-search-icon { bottom: auto; top: 50%; transform: translateY(-50%); }
       .hero-search input { font-size: 16px; }
       nav.toc .toc-search input { font-size: 16px; }
     }
@@ -784,9 +811,11 @@
       </div>
       <div class="hero-search" id="hero-search-wrap">
         <label for="hero-search">Search documentation</label>
-        <span class="hero-search-icon" aria-hidden="true">⌕</span>
-        <input type="search" id="hero-search" placeholder="e.g. approve exercises, copy test, Harjoitukset…" autocomplete="off" />
-        <div class="search-results" id="hero-search-results" role="listbox" aria-label="Search suggestions"></div>
+        <div class="hero-search-field">
+          <span class="hero-search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="20" y1="20" x2="16.65" y2="16.65"></line></svg></span>
+          <input type="search" id="hero-search" placeholder="e.g. approve exercises, copy test, Harjoitukset…" autocomplete="off" />
+          <div class="search-results" id="hero-search-results" role="listbox" aria-label="Search suggestions"></div>
+        </div>
       </div>
     </div>
   </header>
@@ -797,7 +826,7 @@
       <div class="toc-links">
       <div class="toc-links-head">
         <div class="toc-search" id="sidebar-search-wrap">
-          <span class="toc-search-icon" aria-hidden="true">⌕</span>
+          <span class="toc-search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="20" y1="20" x2="16.65" y2="16.65"></line></svg></span>
           <input type="search" id="sidebar-search" placeholder="Quick search…" autocomplete="off" aria-label="Search documentation" />
           <div class="search-results" id="sidebar-search-results" role="listbox" aria-label="Search suggestions"></div>
         </div>
@@ -1732,8 +1761,11 @@
 
       var tocLinks = Array.prototype.slice.call(document.querySelectorAll('.toc-link'));
       var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
+      var userNavigating = false;
+      var navigationTimer = null;
 
-      function setActiveSection(id) {
+      function setActiveSection(id, options) {
+        options = options || {};
         tocLinks.forEach(function (link) {
           link.classList.toggle('active', link.getAttribute('data-section') === id);
         });
@@ -1743,21 +1775,22 @@
         if (activeLink) {
           var parentGroup = activeLink.closest('.toc-group');
           if (parentGroup) parentGroup.classList.add('is-active');
+          if (options.revealInSidebar) {
+            ensureTocLinkVisible(activeLink);
+          }
         }
-        scrollActiveTocLinkIntoView();
         updateTocScrollHint();
       }
 
-      function scrollActiveTocLinkIntoView() {
+      function ensureTocLinkVisible(link) {
         var scrollEl = document.getElementById('toc-nav-scroll');
-        var active = document.querySelector('.toc-link.active');
-        if (!scrollEl || !active) return;
-        var linkRect = active.getBoundingClientRect();
+        if (!scrollEl || !link) return;
+        var linkRect = link.getBoundingClientRect();
         var scrollRect = scrollEl.getBoundingClientRect();
-        var relativeTop = linkRect.top - scrollRect.top + scrollEl.scrollTop;
-        var target = relativeTop - scrollEl.clientHeight / 2 + active.offsetHeight / 2;
-        if (relativeTop < scrollEl.scrollTop + 8 || relativeTop + active.offsetHeight > scrollEl.scrollTop + scrollEl.clientHeight - 8) {
-          scrollEl.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+        if (linkRect.top < scrollRect.top + 6) {
+          scrollEl.scrollTop += linkRect.top - scrollRect.top - 10;
+        } else if (linkRect.bottom > scrollRect.bottom - 6) {
+          scrollEl.scrollTop += linkRect.bottom - scrollRect.bottom + 10;
         }
       }
 
@@ -1778,8 +1811,16 @@
       }
 
       tocLinks.forEach(function (link) {
-        link.addEventListener('click', function () {
-          setActiveSection(link.getAttribute('data-section'));
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          var id = link.getAttribute('data-section');
+          userNavigating = true;
+          if (navigationTimer) clearTimeout(navigationTimer);
+          setActiveSection(id, { revealInSidebar: true });
+          navigateTo(id, { skipActive: true });
+          navigationTimer = setTimeout(function () {
+            userNavigating = false;
+          }, 900);
           if (tocNav && window.matchMedia('(max-width: 960px)').matches) {
             tocNav.classList.add('collapsed');
             if (tocToggle) {
@@ -1793,6 +1834,7 @@
       if ('IntersectionObserver' in window && sections.length) {
         var observer = new IntersectionObserver(
           function (entries) {
+            if (userNavigating) return;
             var visible = entries
               .filter(function (e) { return e.isIntersecting; })
               .sort(function (a, b) { return b.intersectionRatio - a.intersectionRatio; });
@@ -1800,7 +1842,7 @@
               setActiveSection(visible[0].target.id);
             }
           },
-          { rootMargin: '-20% 0px -55% 0px', threshold: [0.1, 0.25, 0.5] }
+          { rootMargin: '-18% 0px -58% 0px', threshold: [0.12, 0.3, 0.5] }
         );
         sections.forEach(function (section) { observer.observe(section); });
       }
@@ -1831,10 +1873,13 @@
         return wordHits ? 20 + wordHits * 10 : 0;
       }
 
-      function navigateTo(id) {
+      function navigateTo(id, options) {
+        options = options || {};
         var el = document.getElementById(id);
         if (!el) return;
-        setActiveSection(id);
+        if (!options.skipActive) {
+          setActiveSection(id, { revealInSidebar: true });
+        }
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         history.replaceState(null, '', '#' + id);
       }
