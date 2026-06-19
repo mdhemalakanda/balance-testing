@@ -134,40 +134,51 @@
   {
     "beat": "13",
     "start_sec": 79.752,
-    "end_sec": 84.958,
-    "audio_sec": 5.208,
-    "video_sec": 5.206,
-    "drift_sec": 0.002,
+    "end_sec": 86.219,
+    "audio_sec": 6.456,
+    "video_sec": 6.467,
+    "drift_sec": 0.011,
     "image": "01c-linked-exercise.png",
-    "text": "To link a test to an exercise, open that test again in the editor.",
+    "text": "To link a test to an exercise, open that test and find Linked exercise in the sidebar.",
     "ok": true
   },
   {
     "beat": "14",
-    "start_sec": 84.958,
-    "end_sec": 92.062,
-    "audio_sec": 7.104,
-    "video_sec": 7.104,
-    "drift_sec": 0.0,
+    "start_sec": 86.219,
+    "end_sec": 92.786,
+    "audio_sec": 6.552,
+    "video_sec": 6.567,
+    "drift_sec": 0.015,
     "image": "01c-linked-exercise.png",
-    "text": "In the sidebar, open Linked exercise. Search by title or identifier.",
+    "text": "Current link shows the selected exercise, its status, Edit exercise, and Remove link.",
     "ok": true
   },
   {
     "beat": "15",
-    "start_sec": 92.062,
-    "end_sec": 98.629,
-    "audio_sec": 6.552,
-    "video_sec": 6.567,
-    "drift_sec": 0.015,
+    "start_sec": 92.786,
+    "end_sec": 99.72,
+    "audio_sec": 6.936,
+    "video_sec": 6.934,
+    "drift_sec": 0.002,
     "image": "01c-linked-exercise-open.png",
-    "text": "Pick an exercise from the list. Click Update on the test to save the link.",
+    "text": "Under Change exercise, type a title or identifier in the search bar, then click the search button.",
     "ok": true
   },
   {
     "beat": "16",
-    "start_sec": 98.629,
-    "end_sec": 105.109,
+    "start_sec": 99.72,
+    "end_sec": 105.22,
+    "audio_sec": 5.496,
+    "video_sec": 5.5,
+    "drift_sec": 0.004,
+    "image": "01c-linked-exercise-open.png",
+    "text": "Pick an exercise from the dropdown, then click Update on the test to save.",
+    "ok": true
+  },
+  {
+    "beat": "17",
+    "start_sec": 105.22,
+    "end_sec": 111.7,
     "audio_sec": 6.48,
     "video_sec": 6.48,
     "drift_sec": 0.0,
@@ -176,9 +187,9 @@
     "ok": true
   },
   {
-    "beat": "17",
-    "start_sec": 105.109,
-    "end_sec": 110.643,
+    "beat": "18",
+    "start_sec": 111.7,
+    "end_sec": 117.234,
     "audio_sec": 5.52,
     "video_sec": 5.534,
     "drift_sec": 0.014,
@@ -187,9 +198,9 @@
     "ok": true
   },
   {
-    "beat": "18",
-    "start_sec": 110.643,
-    "end_sec": 119.443,
+    "beat": "19",
+    "start_sec": 117.234,
+    "end_sec": 126.034,
     "audio_sec": 8.784,
     "video_sec": 8.8,
     "drift_sec": 0.016,
@@ -198,9 +209,9 @@
     "ok": true
   },
   {
-    "beat": "19",
-    "start_sec": 119.443,
-    "end_sec": 126.177,
+    "beat": "20",
+    "start_sec": 126.034,
+    "end_sec": 132.768,
     "audio_sec": 6.72,
     "video_sec": 6.734,
     "drift_sec": 0.014,
@@ -209,9 +220,9 @@
     "ok": true
   },
   {
-    "beat": "20",
-    "start_sec": 126.177,
-    "end_sec": 132.444,
+    "beat": "21",
+    "start_sec": 132.768,
+    "end_sec": 139.035,
     "audio_sec": 6.264,
     "video_sec": 6.267,
     "drift_sec": 0.003,
@@ -220,9 +231,9 @@
     "ok": true
   },
   {
-    "beat": "21",
-    "start_sec": 132.444,
-    "end_sec": 137.344,
+    "beat": "22",
+    "start_sec": 139.035,
+    "end_sec": 143.935,
     "audio_sec": 4.896,
     "video_sec": 4.9,
     "drift_sec": 0.004,
@@ -231,9 +242,9 @@
     "ok": true
   },
   {
-    "beat": "22",
-    "start_sec": 137.344,
-    "end_sec": 141.478,
+    "beat": "23",
+    "start_sec": 143.935,
+    "end_sec": 148.069,
     "audio_sec": 4.128,
     "video_sec": 4.134,
     "drift_sec": 0.006,
@@ -242,9 +253,9 @@
     "ok": true
   },
   {
-    "beat": "23",
-    "start_sec": 141.478,
-    "end_sec": 146.112,
+    "beat": "24",
+    "start_sec": 148.069,
+    "end_sec": 152.703,
     "audio_sec": 4.632,
     "video_sec": 4.634,
     "drift_sec": 0.002,
@@ -253,9 +264,9 @@
     "ok": true
   },
   {
-    "beat": "24",
-    "start_sec": 146.112,
-    "end_sec": 151.979,
+    "beat": "25",
+    "start_sec": 152.703,
+    "end_sec": 158.57,
     "audio_sec": 5.856,
     "video_sec": 5.867,
     "drift_sec": 0.011,
@@ -264,9 +275,9 @@
     "ok": true
   },
   {
-    "beat": "25",
-    "start_sec": 151.979,
-    "end_sec": 156.993,
+    "beat": "26",
+    "start_sec": 158.57,
+    "end_sec": 163.584,
     "audio_sec": 5.016,
     "video_sec": 5.014,
     "drift_sec": 0.002,
@@ -275,9 +286,9 @@
     "ok": true
   },
   {
-    "beat": "26",
-    "start_sec": 156.993,
-    "end_sec": 161.529,
+    "beat": "27",
+    "start_sec": 163.584,
+    "end_sec": 168.12,
     "audio_sec": 4.536,
     "video_sec": 4.536,
     "drift_sec": 0.0,
@@ -286,9 +297,9 @@
     "ok": true
   },
   {
-    "beat": "27",
-    "start_sec": 161.529,
-    "end_sec": 166.129,
+    "beat": "28",
+    "start_sec": 168.12,
+    "end_sec": 172.72,
     "audio_sec": 4.584,
     "video_sec": 4.6,
     "drift_sec": 0.016,
@@ -297,9 +308,9 @@
     "ok": true
   },
   {
-    "beat": "28",
-    "start_sec": 166.129,
-    "end_sec": 173.796,
+    "beat": "29",
+    "start_sec": 172.72,
+    "end_sec": 180.387,
     "audio_sec": 7.656,
     "video_sec": 7.667,
     "drift_sec": 0.011,
@@ -308,9 +319,9 @@
     "ok": true
   },
   {
-    "beat": "29",
-    "start_sec": 173.796,
-    "end_sec": 180.43,
+    "beat": "30",
+    "start_sec": 180.387,
+    "end_sec": 187.021,
     "audio_sec": 6.624,
     "video_sec": 6.634,
     "drift_sec": 0.01,
@@ -319,9 +330,9 @@
     "ok": true
   },
   {
-    "beat": "30",
-    "start_sec": 180.43,
-    "end_sec": 184.438,
+    "beat": "31",
+    "start_sec": 187.021,
+    "end_sec": 191.029,
     "audio_sec": 4.008,
     "video_sec": 4.008,
     "drift_sec": 0.0,
@@ -330,9 +341,9 @@
     "ok": true
   },
   {
-    "beat": "31",
-    "start_sec": 184.438,
-    "end_sec": 188.672,
+    "beat": "32",
+    "start_sec": 191.029,
+    "end_sec": 195.263,
     "audio_sec": 4.224,
     "video_sec": 4.234,
     "drift_sec": 0.01,
@@ -341,9 +352,9 @@
     "ok": true
   },
   {
-    "beat": "32",
-    "start_sec": 188.672,
-    "end_sec": 194.475,
+    "beat": "33",
+    "start_sec": 195.263,
+    "end_sec": 201.066,
     "audio_sec": 5.808,
     "video_sec": 5.803,
     "drift_sec": 0.005,
@@ -352,9 +363,9 @@
     "ok": true
   },
   {
-    "beat": "33",
-    "start_sec": 194.475,
-    "end_sec": 200.379,
+    "beat": "34",
+    "start_sec": 201.066,
+    "end_sec": 206.97,
     "audio_sec": 5.904,
     "video_sec": 5.904,
     "drift_sec": 0.0,
@@ -363,9 +374,9 @@
     "ok": true
   },
   {
-    "beat": "34",
-    "start_sec": 200.379,
-    "end_sec": 206.079,
+    "beat": "35",
+    "start_sec": 206.97,
+    "end_sec": 212.67,
     "audio_sec": 5.688,
     "video_sec": 5.7,
     "drift_sec": 0.012,
@@ -374,9 +385,9 @@
     "ok": true
   },
   {
-    "beat": "35",
-    "start_sec": 206.079,
-    "end_sec": 211.613,
+    "beat": "36",
+    "start_sec": 212.67,
+    "end_sec": 218.204,
     "audio_sec": 5.52,
     "video_sec": 5.534,
     "drift_sec": 0.014,
@@ -385,9 +396,9 @@
     "ok": true
   },
   {
-    "beat": "36",
-    "start_sec": 211.613,
-    "end_sec": 219.917,
+    "beat": "37",
+    "start_sec": 218.204,
+    "end_sec": 226.508,
     "audio_sec": 8.304,
     "video_sec": 8.304,
     "drift_sec": 0.0,
@@ -396,9 +407,9 @@
     "ok": true
   },
   {
-    "beat": "37",
-    "start_sec": 219.917,
-    "end_sec": 222.351,
+    "beat": "38",
+    "start_sec": 226.508,
+    "end_sec": 228.942,
     "audio_sec": 2.424,
     "video_sec": 2.434,
     "drift_sec": 0.01,

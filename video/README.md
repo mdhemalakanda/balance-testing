@@ -3,16 +3,15 @@
 | | |
 |---|---|
 | **Live MP4** | https://mdhemalakanda.github.io/balance-testing/video/balance-testing-walkthrough.mp4 |
-| **Duration** | ~3.5 minutes (37 beats) |
+| **Duration** | ~3.7 minutes (38 beats) |
 | **Voice** | `en-US-GuyNeural` — clear American English |
 | **Sync proof** | `sync-manifest.json` — every beat verified ≤ 0.08s drift |
 
-## v5 — linked exercise workflow
+## v6 — linked exercise UI (full metabox)
 
-- **Copy To excercise** — content only (no automatic link)
-- **Linked exercise** sidebar — searchable picker on test edit screen
-- **Bulk copy** — creates drafts; links set manually per test
-- Clean screenshots (no plugin notices), beat-sync verified
+- **Current link** card — status, Edit exercise, Remove link
+- **Change exercise** — search bar + Search button + dropdown picker
+- **Browse all exercises** footer link
 
 ## Rebuild
 

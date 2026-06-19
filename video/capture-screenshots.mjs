@@ -216,13 +216,17 @@ async function main() {
     await shot(page, "01b-copy-button", { selector: "#submitdiv" });
 
     await page.waitForSelector("#bt-linked-exercise-root", { timeout: 15000 });
+    await page.waitForSelector(".bt-linked-exercise__card", { timeout: 15000 });
     await page.evaluate(() => document.querySelector("#bt-linked-exercise")?.scrollIntoView({ block: "start" }));
+    await page.waitForTimeout(400);
     await shot(page, "01c-linked-exercise", { selector: "#bt-linked-exercise" });
 
     const search = page.locator("#bt-linked-exercise-search");
     await search.click();
     await search.fill("tasapaino");
+    await page.locator("#bt-linked-exercise-search-btn").click();
     await page.waitForSelector(".bt-linked-exercise__option", { timeout: 15000 });
+    await page.waitForTimeout(300);
     await shot(page, "01c-linked-exercise-open", { selector: "#bt-linked-exercise" });
 
     await page.goto(`${BASE}/wp-admin/edit.php?post_type=excercise`);
