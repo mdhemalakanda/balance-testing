@@ -1,33 +1,25 @@
 # Balance Testing — Video walkthrough
 
-**Full administrator walkthrough (~6.5 minutes)**
+**Administrator walkthrough (~4.5 minutes)**
 
 | | |
 |---|---|
 | **File** | `balance-testing-walkthrough.mp4` |
-| **Voice** | American English — `en-US-BrianNeural` (conversational, not overly formal) |
-| **Sync** | Each scene’s video length matches its narration exactly (audio-driven timing) |
-| **Live URL** | https://mdhemalakanda.github.io/balance-testing/balance-testing-walkthrough.mp4 |
+| **Live URL** | https://mdhemalakanda.github.io/balance-testing/video/balance-testing-walkthrough.mp4 |
+| **Voice** | `en-US-AndrewNeural` — slow, clear American English |
+| **Sync method** | **32 beats** — each spoken line = one screenshot + on-screen label (no long mismatched sections) |
 
-## What the video covers
+## What changed (v2)
 
-1. Introduction — what Balance Testing does  
-2. Admin menu (Tests & Exercises)  
-3. Create a balance test  
-4. Link test → exercise (Copy To excercise)  
-5. Verify links (Identifier & Linked test columns)  
-6. Bulk copy for initial setup  
-7. Users Progress & participants  
-8. Participant login & account menu  
-9. Taking tests & rating 1–6  
-10. How ratings drive suggestions  
-11. Approve exercise suggestions  
-12. Reorder exercises  
-13. Display exercises to participant  
-14. Harjoitukset tab (participant view)  
-15. Closing & documentation link  
+- **Perfect sync:** One short sentence per screen. When the voice says “Click Copy To excercise”, that screenshot is on screen for that line only.
+- **On-screen labels:** Blue title bar + caption at bottom match what is being said.
+- **Clearer voice:** Slower pace (−14%), simpler sentences, warmer American tone.
 
-## Rebuild the video
+## Coverage
+
+Intro → admin menu → create test → link exercise → verify links → bulk copy → Users Progress → participant login → take tests → ratings → approve → reorder → display → Harjoitukset → summary.
+
+## Rebuild
 
 ```bash
 cd docs/video
@@ -36,4 +28,4 @@ pip3 install edge-tts pillow
 python3 build-video.py
 ```
 
-Edit narration in `scenes.json`, then re-run `build-video.py`.
+Edit lines in `beats.json` (one `text` + one `image` per beat), then re-run.
