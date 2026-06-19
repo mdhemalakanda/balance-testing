@@ -1,20 +1,29 @@
-# Balance Testing — Administrator Guide
+# Balance Testing — Documentation
 
-Client-facing documentation for the Balance Testing WordPress plugin (Parempi tasapaino course administrators).
+This folder is published on **GitHub Pages** (documentation only — not the full plugin).
 
-## Live site
+## Live URL
 
 **https://mdhemalakanda.github.io/balance-testing/**
 
-## Contents
+## GitHub repository
 
-| File | Purpose |
-|------|---------|
-| `index.html` | Main guide (GitHub Pages entry) |
-| `user-guide.html` | Same guide (alternate URL) |
-| `assets/` | Screenshots used in the guide |
-| `LOCAL-DEV.md` | Local development notes |
+**https://github.com/mdhemalakanda/balance-testing**
 
-## Update the live guide
+The repo contains only:
 
-Edit the guide in the WordPress plugin (`wp-content/plugins/balance-testing/docs/`), copy to `index.html`, then commit and push to `main`.
+- `index.html` / `user-guide.html`
+- `assets/` (screenshots)
+- `.nojekyll`
+
+The guide includes **Link test to exercise (full process)** under the Exercises sidebar — the complete walkthrough for connecting tests to exercises.
+
+**Video walkthrough (~3 min):** [video/balance-testing-walkthrough.mp4](video/balance-testing-walkthrough.mp4) — synced narration covering the full admin and participant workflow (clean screenshots, no admin notices).
+
+## Update the live site
+
+1. Edit `user-guide.html` in this folder.
+2. Sync: `cp user-guide.html index.html`
+3. From a clone of the GitHub repo, copy these files and push to `main`.
+
+Or deploy from `/tmp/balance-testing-gh` after cloning the repo.

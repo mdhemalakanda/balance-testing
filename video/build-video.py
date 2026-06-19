@@ -78,6 +78,17 @@ def make_title_slides() -> None:
     slide("Balance Testing", "You are ready to go", "title-outro.png")
 
 
+def resolve_asset(source_name: str) -> Path:
+    """Prefer recaptured clean screenshots when present."""
+    clean = ASSETS / "clean" / source_name
+    if clean.exists():
+        return clean
+    legacy = ASSETS / source_name
+    if legacy.exists():
+        return legacy
+    raise FileNotFoundError(f"Missing asset: {source_name} (checked clean/ and assets/)")
+
+
 def prepare_frame(source_name: str) -> Path:
     """Fit full screenshot on canvas — no crop, no zoom."""
     try:
@@ -88,9 +99,7 @@ def prepare_frame(source_name: str) -> Path:
 
     FRAMES.mkdir(exist_ok=True)
     out = FRAMES / source_name
-    src = ASSETS / source_name
-    if not src.exists():
-        raise FileNotFoundError(src)
+    src = resolve_asset(source_name)
 
     canvas = Image.new("RGB", (W, H), "#111827")
     img = Image.open(src).convert("RGB")

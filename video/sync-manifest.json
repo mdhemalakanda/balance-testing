@@ -50,7 +50,7 @@
     "audio_sec": 4.248,
     "video_sec": 4.246,
     "drift_sec": 0.002,
-    "image": "01-edit-test-copy-button.png",
+    "image": "01-edit-test.png",
     "text": "To create a test, go to Tests, then Add New.",
     "ok": true
   },
@@ -61,7 +61,7 @@
     "audio_sec": 7.056,
     "video_sec": 7.067,
     "drift_sec": 0.011,
-    "image": "01-edit-test-copy-button.png",
+    "image": "01-edit-test.png",
     "text": "Add the title, instructions, and video. Pick the correct difficulty scale.",
     "ok": true
   },
@@ -72,7 +72,7 @@
     "audio_sec": 3.192,
     "video_sec": 3.2,
     "drift_sec": 0.008,
-    "image": "01-edit-test-copy-button.png",
+    "image": "01-edit-test.png",
     "text": "Click Publish when the test is ready.",
     "ok": true
   },
@@ -83,7 +83,7 @@
     "audio_sec": 6.0,
     "video_sec": 6.0,
     "drift_sec": 0.0,
-    "image": "01b-copy-to-exercise-button.png",
+    "image": "01-edit-test.png",
     "text": "Now link the test to an exercise. Open that published test.",
     "ok": true
   },
@@ -94,7 +94,7 @@
     "audio_sec": 5.64,
     "video_sec": 5.64,
     "drift_sec": 0.0,
-    "image": "01b-copy-to-exercise-button.png",
+    "image": "01b-copy-button.png",
     "text": "In the Publish box on the right, click Copy To excercise, below Update.",
     "ok": true
   },
@@ -105,7 +105,7 @@
     "audio_sec": 6.648,
     "video_sec": 6.635,
     "drift_sec": 0.013,
-    "image": "01b-copy-to-exercise-button.png",
+    "image": "01b-copy-button.png",
     "text": "WordPress creates an exercise draft. Review it, then click Publish.",
     "ok": true
   },
@@ -149,7 +149,7 @@
     "audio_sec": 5.208,
     "video_sec": 5.206,
     "drift_sec": 0.002,
-    "image": "04-bulk-copy-exercises.png",
+    "image": "04-bulk-copy.png",
     "text": "For initial setup, open Tests, Bulk copy to exercises.",
     "ok": true
   },
@@ -160,7 +160,7 @@
     "audio_sec": 6.12,
     "video_sec": 6.134,
     "drift_sec": 0.014,
-    "image": "04-bulk-copy-exercises.png",
+    "image": "04-bulk-copy.png",
     "text": "Click Run bulk copy. Then publish any new exercise drafts.",
     "ok": true
   },
@@ -171,7 +171,7 @@
     "audio_sec": 6.72,
     "video_sec": 6.734,
     "drift_sec": 0.014,
-    "image": "05-users-progress-list.png",
+    "image": "05-users-progress.png",
     "text": "You create participant accounts. Then open Tests, Users Progress.",
     "ok": true
   },
@@ -182,7 +182,7 @@
     "audio_sec": 6.264,
     "video_sec": 6.267,
     "drift_sec": 0.003,
-    "image": "05-users-progress-list.png",
+    "image": "05-users-progress.png",
     "text": "This list shows every participant. Click VIEW to open one person.",
     "ok": true
   },
@@ -193,7 +193,7 @@
     "audio_sec": 4.896,
     "video_sec": 4.9,
     "drift_sec": 0.004,
-    "image": "08-frontend-account-nav.png",
+    "image": "08-account-nav.png",
     "text": "On the website, participants log in to their own account page.",
     "ok": true
   },
@@ -204,7 +204,7 @@
     "audio_sec": 4.128,
     "video_sec": 4.134,
     "drift_sec": 0.006,
-    "image": "08-frontend-account-nav.png",
+    "image": "08-account-nav.png",
     "text": "Tasapainotestit is where they take balance tests.",
     "ok": true
   },
@@ -215,7 +215,7 @@
     "audio_sec": 4.632,
     "video_sec": 4.634,
     "drift_sec": 0.002,
-    "image": "08-frontend-account-nav.png",
+    "image": "08-account-nav.png",
     "text": "Harjoitukset is where they see exercises you have displayed.",
     "ok": true
   },
@@ -226,7 +226,7 @@
     "audio_sec": 5.856,
     "video_sec": 5.867,
     "drift_sec": 0.011,
-    "image": "09-frontend-balance-tests.png",
+    "image": "09-balance-tests.png",
     "text": "On Tasapainotestit they watch the video and rate difficulty from one to six.",
     "ok": true
   },
@@ -237,7 +237,7 @@
     "audio_sec": 4.968,
     "video_sec": 4.968,
     "drift_sec": 0.0,
-    "image": "09-frontend-balance-tests.png",
+    "image": "09-balance-tests.png",
     "text": "Ratings three and four are the ones that pick exercises for that person.",
     "ok": true
   },
@@ -248,7 +248,7 @@
     "audio_sec": 4.536,
     "video_sec": 4.536,
     "drift_sec": 0.0,
-    "image": "09-frontend-balance-tests.png",
+    "image": "09-balance-tests.png",
     "text": "When their round ends, go back to Users Progress in admin.",
     "ok": true
   },
@@ -259,7 +259,7 @@
     "audio_sec": 4.584,
     "video_sec": 4.6,
     "drift_sec": 0.016,
-    "image": "06-user-detail-exercises.png",
+    "image": "06-exercise-assignments.png",
     "text": "On the user detail page, open Exercise assignments.",
     "ok": true
   },
@@ -270,7 +270,7 @@
     "audio_sec": 7.656,
     "video_sec": 7.667,
     "drift_sec": 0.011,
-    "image": "06-user-detail-exercises.png",
+    "image": "06-exercise-assignments.png",
     "text": "Suggested exercises appear here. Click Approve on each row, or Approve all suggested.",
     "ok": true
   },
@@ -281,7 +281,7 @@
     "audio_sec": 6.624,
     "video_sec": 6.634,
     "drift_sec": 0.01,
-    "image": "06-user-detail-exercises.png",
+    "image": "06-exercise-assignments.png",
     "text": "Use the up and down arrows to reorder. Top row shows first on the site.",
     "ok": true
   },
@@ -292,7 +292,7 @@
     "audio_sec": 4.008,
     "video_sec": 4.008,
     "drift_sec": 0.0,
-    "image": "06-user-detail-exercises.png",
+    "image": "06-exercise-assignments.png",
     "text": "You can also search and add an exercise manually.",
     "ok": true
   },
@@ -303,7 +303,7 @@
     "audio_sec": 4.224,
     "video_sec": 4.234,
     "drift_sec": 0.01,
-    "image": "06b-user-detail-admin.png",
+    "image": "06b-user-detail.png",
     "text": "When the list looks good, click Display exercises.",
     "ok": true
   },
@@ -314,7 +314,7 @@
     "audio_sec": 5.808,
     "video_sec": 5.803,
     "drift_sec": 0.005,
-    "image": "06b-user-detail-admin.png",
+    "image": "06b-user-detail.png",
     "text": "That button sends exercises to the participant and opens Harjoitukset for them.",
     "ok": true
   },
@@ -336,7 +336,7 @@
     "audio_sec": 5.688,
     "video_sec": 5.7,
     "drift_sec": 0.012,
-    "image": "10-frontend-exercises.png",
+    "image": "10-exercises.png",
     "text": "On Harjoitukset, the participant sees your approved exercises in order.",
     "ok": true
   },
@@ -347,7 +347,7 @@
     "audio_sec": 5.52,
     "video_sec": 5.534,
     "drift_sec": 0.014,
-    "image": "10-frontend-exercises.png",
+    "image": "10-exercises-waiting.png",
     "text": "If they only see a waiting message, you forgot to click Display exercises.",
     "ok": true
   },
