@@ -1,31 +1,26 @@
 # Balance Testing — Video walkthrough
 
-**Administrator walkthrough (~4.5 minutes)**
-
 | | |
 |---|---|
-| **File** | `balance-testing-walkthrough.mp4` |
-| **Live URL** | https://mdhemalakanda.github.io/balance-testing/video/balance-testing-walkthrough.mp4 |
-| **Voice** | `en-US-AndrewNeural` — slow, clear American English |
-| **Sync method** | **32 beats** — each spoken line = one screenshot + on-screen label (no long mismatched sections) |
+| **Live MP4** | https://mdhemalakanda.github.io/balance-testing/video/balance-testing-walkthrough.mp4 |
+| **Duration** | ~3 minutes (34 beats) |
+| **Voice** | `en-US-GuyNeural` — clear American English |
+| **Sync proof** | `sync-manifest.json` — every beat verified ≤ 0.08s drift |
 
-## What changed (v2)
+## v3 fixes
 
-- **Perfect sync:** One short sentence per screen. When the voice says “Click Copy To excercise”, that screenshot is on screen for that line only.
-- **On-screen labels:** Blue title bar + caption at bottom match what is being said.
-- **Clearer voice:** Slower pace (−14%), simpler sentences, warmer American tone.
-
-## Coverage
-
-Intro → admin menu → create test → link exercise → verify links → bulk copy → Users Progress → participant login → take tests → ratings → approve → reorder → display → Harjoitukset → summary.
+- **No zoom** — full screenshot fits on screen, nothing cropped or animated
+- **No on-screen labels or captions** — removed blue/black overlay boxes
+- **No gaps** — zero padding between beats; image changes exactly when narration changes
+- **One line = one screen** — 34 short beats, each with the matching screenshot
+- **Automated sync check** — build fails if any beat audio/video length differs
 
 ## Rebuild
 
 ```bash
-cd docs/video
-npm install @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
 pip3 install edge-tts pillow
+npm install @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
 python3 build-video.py
 ```
 
-Edit lines in `beats.json` (one `text` + one `image` per beat), then re-run.
+Edit `beats.json` then re-run.
