@@ -831,7 +831,7 @@
         <span class="pill">Plugin: Balance Testing</span>
         <span class="pill">Site: parempitasapaino.fi</span>
         <span class="pill">Updated: June 2026</span>
-        <span class="pill"><a href="#video-walkthrough" style="color:#fff;text-decoration:none;">▶ Video walkthrough (~3 min)</a></span>
+        <span class="pill"><a href="#video-walkthrough" style="color:#fff;text-decoration:none;">▶ Video walkthrough (~3.5 min)</a></span>
       </div>
       <div class="hero-search" id="hero-search-wrap">
         <label for="hero-search">Search documentation</label>
@@ -956,19 +956,19 @@
         </ul>
 
         <div class="tip">
-          <strong>Golden rule:</strong> Every published test should have a published exercise linked to it before participants start the course.
-          Use <strong>Copy To excercise</strong> (one test) or <strong>Bulk copy to exercises</strong> (many tests at once).
+          <strong>Golden rule:</strong> Every published test should have a <strong>Linked exercise</strong> set in the test sidebar before participants start the course.
+          Use <strong>Copy To excercise</strong> or <strong>Bulk copy</strong> only to create exercise content — then pick the link manually.
         </div>
       </section>
 
       <section id="video-walkthrough">
         <div class="video-wrap">
-          <h2>▶ Video walkthrough (~3 minutes)</h2>
+          <h2>▶ Video walkthrough (~3.5 minutes)</h2>
           <p class="lead">
             Full Balance Testing workflow with clear American narration.
             Each spoken line matches the screenshot on screen — no zoom, no on-screen text overlays.
           </p>
-          <video controls playsinline preload="metadata" poster="assets/05-users-progress-list.png">
+          <video controls playsinline preload="metadata" poster="assets/01c-linked-exercise.png">
             <source src="video/balance-testing-walkthrough.mp4" type="video/mp4" />
             Your browser does not support HTML5 video.
             <a href="video/balance-testing-walkthrough.mp4">Download the walkthrough video</a>
@@ -1098,7 +1098,7 @@
 
         <figure>
           <img src="assets/02-tests-list.png" alt="Tests list in WordPress admin" />
-          <figcaption>Tests list with Identifier and Linked test columns.</figcaption>
+          <figcaption>Tests list with Identifier and Linked exercise columns.</figcaption>
         </figure>
       </section>
 
@@ -1138,7 +1138,7 @@
         </figure>
 
         <div class="tip">
-          After publishing a test, create its matching exercise with <strong>Copy To excercise</strong> (next section)
+          After publishing a test, create exercise content with <strong>Copy To excercise</strong> or <strong>Bulk copy</strong>, then set <strong>Linked exercise</strong> in the test sidebar.
           or run <strong>Bulk copy to exercises</strong> for many tests at once.
         </div>
       </section>
@@ -1228,7 +1228,7 @@
 
         <h3>The exercise lifecycle (your steps)</h3>
         <ol>
-          <li><strong>Setup (once)</strong> — For each test, use <strong>Copy To excercise</strong> or <strong>Bulk copy</strong> to create exercise posts. Publish all exercises.</li>
+          <li><strong>Setup (once)</strong> — Create exercises (copy or bulk copy), publish them, then set <strong>Linked exercise</strong> on each test.</li>
           <li><strong>After each round</strong> — System suggests up to 5 exercises (from 3/4 ratings). You get an email.</li>
           <li><strong>Review</strong> — Open Users Progress → VIEW → Exercise assignments. Approve, reorder, or add manually.</li>
           <li><strong>Publish to participant</strong> — Click <strong>Display exercises</strong>. They see Harjoitukset and get email.</li>
@@ -1294,17 +1294,18 @@
         <h3>At a glance — the full journey</h3>
         <div class="flow-grid">
           <div class="flow-step"><strong>Step 1 — Create &amp; publish tests</strong>You build the test library (video, instructions, rating scale).</div>
-          <div class="flow-step"><strong>Step 2 — Link each test to an exercise</strong>Use Copy To excercise (one test) or Bulk copy (many tests). This is a one-time setup per test.</div>
+          <div class="flow-step"><strong>Step 2 — Create exercises (optional copy)</strong>Use Copy To excercise or Bulk copy to duplicate test content into exercise drafts. Copy does <em>not</em> link tests to exercises.</div>
           <div class="flow-step"><strong>Step 3 — Publish exercises</strong>Review copied drafts and publish them on Exercises → All Exercises.</div>
-          <div class="flow-step"><strong>Step 4 — Verify links</strong>Check Identifier and Linked test columns in Tests and Exercises lists.</div>
-          <div class="flow-step"><strong>Step 5 — Participant rates tests</strong>When they finish a round, the system reads their 3 and 4 ratings.</div>
-          <div class="flow-step"><strong>Step 6 — Suggestions appear</strong>Up to 5 linked exercises per round are suggested in Users Progress.</div>
-          <div class="flow-step"><strong>Step 7 — You approve &amp; display</strong>Approve rows, reorder if needed, click Display exercises.</div>
-          <div class="flow-step"><strong>Step 8 — Participant sees Harjoitukset</strong>Linked exercises appear on their account in your chosen order.</div>
+          <div class="flow-step"><strong>Step 4 — Link each test to an exercise</strong>On each test edit screen, use the sidebar <strong>Linked exercise</strong> searchable picker.</div>
+          <div class="flow-step"><strong>Step 5 — Verify links</strong>Check the <strong>Linked exercise</strong> column on Tests → All Tests.</div>
+          <div class="flow-step"><strong>Step 6 — Participant rates tests</strong>When they finish a round, the system reads their 3 and 4 ratings.</div>
+          <div class="flow-step"><strong>Step 7 — Suggestions appear</strong>Up to 5 linked exercises per round are suggested in Users Progress.</div>
+          <div class="flow-step"><strong>Step 8 — You approve &amp; display</strong>Approve rows, reorder if needed, click Display exercises.</div>
+          <div class="flow-step"><strong>Step 9 — Participant sees Harjoitukset</strong>Linked exercises appear on their account in your chosen order.</div>
         </div>
 
-        <h3>Phase 1 — Create the link (one-time, before or after course start)</h3>
-        <p>You do <strong>not</strong> link exercises to participants manually. You link each <strong>test post</strong> to its <strong>exercise post</strong> once. The system reuses that link for every participant who rates that test.</p>
+        <h3>Phase 1 — Create exercise content (copy is optional)</h3>
+        <p>Copy duplicates test content into new exercise drafts. It does <strong>not</strong> create a test ↔ exercise link. You can copy the same test many times if you need multiple exercise variants.</p>
 
         <div class="screenshot-grid">
           <figure>
@@ -1325,13 +1326,18 @@
           <tbody>
             <tr>
               <td><strong>Copy To excercise</strong></td>
-              <td>You added or changed a single test</td>
-              <td>Creates one new exercise draft from that test. Copies title, text, video, images, and settings. Opens the exercise for you to review and publish.</td>
+              <td>You need one new exercise from a test</td>
+              <td>Creates one exercise draft with the same title, text, video, and images. Does not link the test to the exercise.</td>
             </tr>
             <tr>
               <td><strong>Bulk copy to exercises</strong></td>
-              <td>Initial setup — many tests have no exercise yet</td>
-              <td>Copies every published test that still lacks a linked exercise. Skips tests already linked. Publishes new exercises automatically; review content afterward.</td>
+              <td>Initial setup — create many exercise drafts at once</td>
+              <td>Creates one exercise draft per published test. Does not link or skip based on existing links. Re-running creates duplicates.</td>
+            </tr>
+            <tr>
+              <td><strong>Linked exercise</strong> (test sidebar)</td>
+              <td>After exercises exist — set the link for suggestions</td>
+              <td>Searchable picker on Tests → Edit test. Choose which exercise is suggested when this test is rated 3 or 4.</td>
             </tr>
           </tbody>
         </table>
@@ -1339,8 +1345,8 @@
 
         <p>Detailed click-by-click steps: <a href="#copy-exercise">Create from test (Copy To excercise)</a> · <a href="#bulk-copy">Bulk copy (initial setup)</a></p>
 
-        <h3>Phase 2 — What the link actually is (how the system remembers it)</h3>
-        <p>When you copy a test to an exercise, the plugin stores the connection in two ways. You never edit these by hand — they are set automatically.</p>
+        <h3>Phase 2 — Set the link on each test</h3>
+        <p>Open <strong>Tests → Edit test</strong>. In the sidebar metabox <strong>Linked exercise</strong>, search by title or identifier and select the exercise for this test. Save/update the test. The link is stored on the test only — you choose it manually.</p>
 
         <div class="table-wrap">
         <table>
@@ -1349,16 +1355,20 @@
           </thead>
           <tbody>
             <tr>
-              <td><strong>Linked test</strong> column (on Exercises list)</td>
-              <td>Shows the test ID this exercise was copied from — the primary link.</td>
+              <td><strong>Linked exercise</strong> metabox (test edit screen)</td>
+              <td>Searchable picker — the exercise suggested when this test is rated 3 or 4.</td>
             </tr>
             <tr>
-              <td><strong>Linked test</strong> column (on Tests list)</td>
-              <td>Shows the exercise ID connected to that test (or — if missing).</td>
+              <td><strong>Linked exercise</strong> column (Tests list)</td>
+              <td>Shows the exercise ID you selected (or — if none).</td>
+            </tr>
+            <tr>
+              <td><strong>Linked exercise</strong> column (Exercises list)</td>
+              <td>Shows test IDs that link to this exercise.</td>
             </tr>
             <tr>
               <td><strong>Identifier</strong> column (e.g. TEST-72)</td>
-              <td>A shared code on both test and exercise. Used as a backup if the copy link is ever missing. Assigned automatically during copy or bulk copy (often from the test title number, e.g. “72. …” → TEST-72).</td>
+              <td>Optional label for admin search — not used to auto-link tests and exercises.</td>
             </tr>
           </tbody>
         </table>
@@ -1366,12 +1376,12 @@
 
         <figure>
           <img src="assets/03-exercises-list.png" alt="Exercises list showing identifier and linked test columns" />
-          <figcaption>Exercises → All Exercises — Identifier and Linked test columns confirm each exercise is tied to a test.</figcaption>
+          <figcaption>Exercises → All Exercises — Identifier and Linked exercise columns confirm each exercise is tied to a test.</figcaption>
         </figure>
 
         <figure>
           <img src="assets/02-tests-list.png" alt="Tests list showing identifier and linked test columns" />
-          <figcaption>Tests → All Tests — Linked test column should show an exercise ID for every test in the live course.</figcaption>
+          <figcaption>Tests → All Tests — Linked exercise column should show an exercise ID for every test in the live course.</figcaption>
         </figure>
 
         <h3>Phase 3 — How the link is used when a participant finishes a round</h3>
@@ -1408,10 +1418,10 @@
         <h3>Phase 5 — Verify every test is linked (checklist)</h3>
         <ol>
           <li>Go to <strong>Tests → All Tests</strong>.</li>
-          <li>Confirm every published test shows a value in <strong>Linked test</strong> (not —).</li>
+          <li>Confirm every published test shows a value in <strong>Linked exercise</strong> (not —).</li>
           <li>Go to <strong>Exercises → All Exercises</strong>.</li>
-          <li>Confirm each exercise shows <strong>Linked test</strong> and an <strong>Identifier</strong>.</li>
-          <li>For any gap: edit the test → <strong>Copy To excercise</strong>, or run <strong>Bulk copy</strong> for remaining unlinked tests.</li>
+          <li>Confirm each exercise shows <strong>Linked exercise</strong> and an <strong>Identifier</strong>.</li>
+          <li>For any gap: edit the test → set <strong>Linked exercise</strong>, or create a new exercise with <strong>Copy To excercise</strong> then link it.</li>
           <li>Publish any exercise still in draft status.</li>
         </ol>
 
@@ -1425,22 +1435,22 @@
             <tr>
               <td>No exercise suggestions after a round</td>
               <td>No 3/4 ratings, or rated tests have no linked exercise</td>
-              <td>Check ratings in Users Progress. Fix missing links with Copy To excercise or Bulk copy, publish exercises. Future rounds will work; past round may need manual add in Exercise assignments.</td>
+              <td>Check ratings in Users Progress. Fix missing links by setting <strong>Linked exercise</strong> on the test. Future rounds will work; past round may need manual add in Exercise assignments.</td>
             </tr>
             <tr>
               <td>Copy To excercise button missing</td>
               <td>Test is draft/trash, or exercise already exists</td>
-              <td>Publish the test first. Check Tests list Linked test column — if linked, edit the existing exercise instead.</td>
+              <td>Publish the test first. Check Tests list Linked exercise column — if linked, edit the existing exercise instead.</td>
             </tr>
             <tr>
-              <td>Linked test shows — on Tests list</td>
+              <td>Linked exercise shows — on Tests list</td>
               <td>Exercise never created for that test</td>
               <td>Copy To excercise on that test, or run Bulk copy.</td>
             </tr>
             <tr>
               <td>Suggestion exists but wrong exercise</td>
               <td>Wrong test linked, or duplicate exercises</td>
-              <td>Check Identifier and Linked test on both posts. Delete wrong exercise assignment row; add correct exercise manually if needed.</td>
+              <td>Check Identifier and Linked exercise on both posts. Delete wrong exercise assignment row; add correct exercise manually if needed.</td>
             </tr>
             <tr>
               <td>Participant sees waiting message on Harjoitukset</td>
@@ -1459,7 +1469,7 @@
           </thead>
           <tbody>
             <tr><td>Create test ↔ exercise link</td><td><strong>You (admin)</strong></td><td>Copy To excercise or Bulk copy; publish exercises</td></tr>
-            <tr><td>Store &amp; look up link</td><td><strong>System</strong></td><td>Linked test ID + Identifier on both posts</td></tr>
+            <tr><td>Store &amp; look up link</td><td><strong>System</strong></td><td>Linked exercise field on each test (`_bt_linked_exercise_id`)</td></tr>
             <tr><td>Rate tests 3 or 4</td><td><strong>Participant</strong></td><td>During Tasapainotestit in each round</td></tr>
             <tr><td>Match ratings to exercises</td><td><strong>System</strong></td><td>Up to 5 suggestions per round from linked exercises</td></tr>
             <tr><td>Approve, reorder, display</td><td><strong>You (admin)</strong></td><td>Users Progress → Exercise assignments → Display exercises</td></tr>
@@ -1476,64 +1486,72 @@
       <section id="copy-exercise" class="section-exercise">
         <h2>Create exercises from tests <span class="badge badge-admin">Admin</span></h2>
         <p>
-          This is <strong>Option A</strong> for creating the test ↔ exercise link — one test at a time.
-          For the complete end-to-end process (setup through participant display), see
+          <strong>Copy To excercise</strong> duplicates test content into a new exercise draft. It does <strong>not</strong> link the test to the exercise.
+          For linking, use the <strong>Linked exercise</strong> sidebar on the test edit screen — see
           <a href="#test-exercise-link">Link test to exercise (full process)</a>.
         </p>
-        <p>
-          Each published test needs a linked <strong>exercise</strong>. When a participant rates that test as 3 or 4,
-          the system can suggest that exercise for them. Without a linked exercise, no suggestion is created for that rating.
-        </p>
 
-        <h3>Option A — One test at a time (best for new tests)</h3>
+        <h3>One test at a time</h3>
         <ol>
           <li>Open <strong>Tests → All Tests</strong> and edit a <strong>published</strong> test.</li>
           <li>In the right <strong>Publish</strong> box, below the blue <strong>Update</strong> button, click <strong>Copy To excercise</strong>.</li>
           <li>Confirm. A new exercise opens as a draft with the same title, text, video, and images copied from the test.</li>
-          <li>Read through the exercise, adjust wording if exercises should differ from test instructions, then click <strong>Publish</strong>.</li>
+          <li>Review the exercise, adjust wording if needed, then click <strong>Publish</strong>.</li>
+          <li>Return to the test and set <strong>Linked exercise</strong> in the sidebar if this exercise should be suggested for 3/4 ratings.</li>
         </ol>
 
-        <p>The same button appears on the Tests list: hover a row and click <strong>Copy To excercise</strong> in the action links.</p>
+        <p>The same copy button appears on the Tests list: hover a row and click <strong>Copy To excercise</strong> in the action links.</p>
 
         <figure>
           <img src="assets/01b-copy-to-exercise-button.png" alt="Copy To excercise button location" />
-          <figcaption>The Copy To excercise button appears below Update in the Publish box (published tests only).</figcaption>
+          <figcaption>Copy To excercise — content only, no automatic link.</figcaption>
         </figure>
 
-        <h3>How to check the link is correct</h3>
+        <h3>Linked exercise picker (separate step)</h3>
+        <ol>
+          <li>Edit the test → sidebar <strong>Linked exercise</strong>.</li>
+          <li>Use the search field (or <strong>Search</strong> button) to find an exercise by title or identifier, then select it from the results.</li>
+          <li>Click <strong>Update</strong> to save the link.</li>
+          <li>To remove a link, use <strong>Remove link</strong> on the linked exercise card (× in the corner or the text action below).</li>
+        </ol>
+
+        <figure>
+          <img src="assets/01c-linked-exercise.png" alt="Linked exercise searchable picker on test edit screen" />
+          <figcaption>Linked exercise metabox — current link card with remove actions, search field with Search button, and exercise picker for 3/4 ratings.</figcaption>
+        </figure>
+
+        <h3>Verify in list tables</h3>
         <ul>
-          <li>On <strong>Tests → All Tests</strong>, columns <strong>Identifier</strong> and <strong>Linked test</strong> help you verify links.</li>
-          <li>On <strong>Exercises → All Exercises</strong>, each row shows which test it came from.</li>
-          <li>An automatic ID (e.g. TEST-72) is assigned when needed so you can find exercises quickly when adding them manually later.</li>
+          <li><strong>Tests → All Tests</strong> — <strong>Linked exercise</strong> column shows the exercise ID you selected.</li>
+          <li><strong>Exercises → All Exercises</strong> — <strong>Linked tests</strong> column shows which tests point to each exercise.</li>
         </ul>
 
         <figure>
           <img src="assets/03-exercises-list.png" alt="Exercises list in admin" />
-          <figcaption>Exercises list — each row shows identifier and linked test ID.</figcaption>
+          <figcaption>Exercises list — identifier and linked tests.</figcaption>
         </figure>
       </section>
 
       <section id="bulk-copy" class="section-exercise">
         <h2>Bulk copy (initial setup) <span class="badge badge-admin">Admin</span></h2>
         <p>
-          This is <strong>Option B</strong> for linking many tests at once. See
-          <a href="#test-exercise-link">Link test to exercise (full process)</a> for how links are used after setup.
+          Creates one exercise draft per published test. Content only — no links. After bulk copy, publish exercises and set
+          <strong>Linked exercise</strong> on each test. See <a href="#test-exercise-link">Link test to exercise (full process)</a>.
         </p>
-        <p>Use this once during initial setup or when many tests still lack exercises.</p>
         <ol>
           <li>Go to <strong>Tests → Bulk copy to exercises</strong>.</li>
-          <li>Review the stats: published tests, already linked, ready to copy.</li>
-          <li>Click <strong>Run bulk copy</strong>. Only tests without a linked exercise are copied.</li>
-          <li>Open <strong>View exercises</strong> to review and publish new exercise posts.</li>
+          <li>Review how many published tests will be copied.</li>
+          <li>Click <strong>Run bulk copy</strong>. Re-running creates duplicate exercise drafts.</li>
+          <li>Open <strong>View exercises</strong>, publish drafts, then set <strong>Linked exercise</strong> on each test.</li>
         </ol>
 
         <figure>
           <img src="assets/04-bulk-copy-exercises.png" alt="Bulk copy to exercises admin page" />
-          <figcaption>Bulk copy screen with stats and Run bulk copy button.</figcaption>
+          <figcaption>Bulk copy — exercise drafts from all published tests.</figcaption>
         </figure>
 
         <div class="warn">
-          Safe to re-run: already-linked tests are skipped. Publish exercise drafts after bulk copy.
+          Bulk copy does not link tests to exercises. Set <strong>Linked exercise</strong> on each test after publishing the new exercises.
         </div>
       </section>
 
@@ -1938,7 +1956,7 @@
 
         <h3>Test and exercise are not linked</h3>
         <ul>
-          <li>Check <strong>Linked test</strong> column on Tests → All Tests and Exercises → All Exercises.</li>
+          <li>Check <strong>Linked exercise</strong> column on Tests → All Tests and Exercises → All Exercises.</li>
           <li>Create the link with <strong>Copy To excercise</strong> (one test) or <strong>Bulk copy to exercises</strong> (many tests).</li>
           <li>Publish the exercise — draft exercises do not appear in suggestions.</li>
           <li>Full walkthrough: <a href="#test-exercise-link">Link test to exercise (full process)</a>.</li>
@@ -1953,7 +1971,7 @@
         <h3>Copy To excercise button missing</h3>
         <ul>
           <li>Test must be <strong>Published</strong> (not draft or trash).</li>
-          <li>An exercise may already exist — check Exercises list and Linked test column.</li>
+          <li>An exercise may already exist — check Exercises list and Linked exercise column.</li>
         </ul>
 
         <h3>Participant says they cannot start next test</h3>
