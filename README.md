@@ -18,7 +18,7 @@ The repo contains only:
 
 The guide includes **Link test to exercise (full process)** under the Exercises sidebar — the complete walkthrough for connecting tests to exercises.
 
-**Video walkthrough (~3.5 min):** [video/balance-testing-walkthrough.mp4](video/balance-testing-walkthrough.mp4) — synced narration: copy content, **Linked exercise** picker, approve, display.
+**Video walkthrough (~3.8 min):** [video/balance-testing-walkthrough.mp4](video/balance-testing-walkthrough.mp4) — synced narration: copy content, **Linked exercise** metabox (Current link, search + picker), approve, display.
 
 ## Update the live site
 
