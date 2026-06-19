@@ -7,11 +7,11 @@
 | **Voice** | `en-US-GuyNeural` — clear American English |
 | **Sync proof** | `sync-manifest.json` — every beat verified ≤ 0.08s drift |
 
-## v6 — linked exercise UI (full metabox)
+## v7 — full-page linked exercise shots
 
-- **Current link** card — status, Edit exercise, Remove link
-- **Change exercise** — search bar + Search button + dropdown picker
-- **Browse all exercises** footer link
+- **Full test edit screen** with sidebar Linked exercise box visible (not cropped metabox only)
+- **Current link** card, **Change exercise** search + button, dropdown picker
+- Narration matches on-screen labels exactly
 
 ## Rebuild
 

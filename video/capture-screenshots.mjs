@@ -140,6 +140,18 @@ async function shot(page, name, opts = {}) {
   console.log("saved", name);
 }
 
+async function prepareLinkedExerciseView(page) {
+  await page.waitForSelector("#bt-linked-exercise-root", { timeout: 15000 });
+  await page.waitForSelector(".bt-linked-exercise__card", { timeout: 15000 });
+  await page.evaluate(() => {
+    const box = document.querySelector("#bt-linked-exercise");
+    if (box) {
+      box.scrollIntoView({ block: "center", inline: "nearest" });
+    }
+  });
+  await page.waitForTimeout(500);
+}
+
 async function viewportAtTop(page) {
   await page.evaluate(() => window.scrollTo(0, 0));
 }
@@ -181,7 +193,7 @@ async function main() {
 
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
-    viewport: { width: 1440, height: 900 },
+    viewport: { width: 1920, height: 1080 },
     deviceScaleFactor: 2,
   });
   const page = await context.newPage();
@@ -206,7 +218,7 @@ async function main() {
       await ensureTestLinkedExercise(conn, testId, exerciseId);
     }
 
-    await page.goto(editHref);
+    await page.goto(editHref, { waitUntil: "networkidle" });
     await cleanAdmin(page);
     await page.waitForSelector("#title");
     await viewportAtTop(page);
@@ -215,19 +227,16 @@ async function main() {
     await page.waitForSelector(".bt-copy-to-excercise-btn", { timeout: 15000 });
     await shot(page, "01b-copy-button", { selector: "#submitdiv" });
 
-    await page.waitForSelector("#bt-linked-exercise-root", { timeout: 15000 });
-    await page.waitForSelector(".bt-linked-exercise__card", { timeout: 15000 });
-    await page.evaluate(() => document.querySelector("#bt-linked-exercise")?.scrollIntoView({ block: "start" }));
-    await page.waitForTimeout(400);
-    await shot(page, "01c-linked-exercise", { selector: "#bt-linked-exercise" });
+    await prepareLinkedExerciseView(page);
+    await shot(page, "01c-linked-exercise");
 
     const search = page.locator("#bt-linked-exercise-search");
     await search.click();
     await search.fill("tasapaino");
     await page.locator("#bt-linked-exercise-search-btn").click();
     await page.waitForSelector(".bt-linked-exercise__option", { timeout: 15000 });
-    await page.waitForTimeout(300);
-    await shot(page, "01c-linked-exercise-open", { selector: "#bt-linked-exercise" });
+    await page.waitForTimeout(400);
+    await shot(page, "01c-linked-exercise-open");
 
     await page.goto(`${BASE}/wp-admin/edit.php?post_type=excercise`);
     await cleanAdmin(page);
