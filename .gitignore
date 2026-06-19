@@ -1,2 +1,8 @@
 .DS_Store
 *.log
+
+video/node_modules/
+video/scenes/
+video/audio/
+video/package.json
+video/package-lock.json

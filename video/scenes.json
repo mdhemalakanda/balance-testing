@@ -1,0 +1,77 @@
+[
+  {
+    "id": "01-intro",
+    "images": ["title-intro.png"],
+    "text": "Hey there. This walkthrough covers the Balance Testing system for the Parempi tasapaino course — from start to finish. You will see how to create balance tests, link them to exercises, how participants take tests on the website, and how you approve, reorder, and display exercises to each person. Grab a coffee — we will go step by step."
+  },
+  {
+    "id": "02-admin-menu",
+    "images": ["02-tests-list.png"],
+    "text": "Everything you manage lives in the WordPress admin under Tests and Exercises. From Tests you create balance tests, bulk-copy them to exercises, track Users Progress, and change Settings. From Exercises you edit the training content participants actually do. Before the course goes live, every published test should have one published exercise linked to it."
+  },
+  {
+    "id": "03-create-test",
+    "images": ["01-edit-test-copy-button.png"],
+    "text": "To create a balance test, go to Tests, then Add New. Add a clear title, instructions, and the test video. Pick the right difficulty scale — balance, strength, or whatever applies. Set menu order if you care about Round One order — higher numbers show earlier. When the content looks good, click Publish. You are not done yet — each test still needs a matching exercise."
+  },
+  {
+    "id": "04-copy-exercise",
+    "images": ["01b-copy-to-exercise-button.png"],
+    "text": "Here is how you link a test to an exercise. Open a published test. In the Publish box on the right, below the blue Update button, click Copy To excercise — yes, that spelling is in the plugin. Confirm, and WordPress creates a new exercise draft with the same title, text, video, and images. Tweak the wording if exercises should read differently from tests, then Publish the exercise. That link is what the system uses later when someone rates this test a three or a four."
+  },
+  {
+    "id": "05-verify-links",
+    "images": ["03-exercises-list.png"],
+    "text": "Always double-check your links. On Exercises, All Exercises, each row shows an Identifier like TEST seventy-two and a Linked test column pointing back to the source test. Switch to Tests, All Tests, and confirm the Linked test column shows an exercise ID — not a dash. If something is missing, run Copy To excercise on that test, or use bulk copy for many at once."
+  },
+  {
+    "id": "06-bulk-copy",
+    "images": ["04-bulk-copy-exercises.png"],
+    "text": "For initial setup, Bulk copy to exercises saves a ton of time. Open Tests, Bulk copy to exercises. You will see stats — how many tests are published, how many already have exercises, and how many are ready to copy. Click Run bulk copy. Only tests without a link are copied; safe to run again. Then open View exercises, skim the new posts, and publish anything still in draft."
+  },
+  {
+    "id": "07-participants",
+    "images": ["05-users-progress-list.png"],
+    "text": "Participants do not register themselves — you create accounts under Users, Add New, and give them the login page. The heart of your daily work is Tests, Users Progress. Each row is one person. Click VIEW to open their detail screen — round limits, every rating, exercise assignments, and buttons to display or hide exercises. That one screen is where most admin work happens after someone finishes a round."
+  },
+  {
+    "id": "08-participant-login",
+    "images": ["08-frontend-account-nav.png"],
+    "text": "On the public site, participants log in at Omatestaus and land on their account page. The sidebar has Tasapainotestit for balance tests, Harjoitukset for exercises you have displayed to them, and Seuraa edistymistä for progress check-ins between rounds. They never touch wp-admin — only this front-end account."
+  },
+  {
+    "id": "09-taking-tests",
+    "images": ["09-frontend-balance-tests.png"],
+    "text": "On Tasapainotestit they watch the video, read the instructions, and rate difficulty from one to six. One is easy, six is impossible. The important ratings for exercises are three and four — moderately hard. They submit once per test per round. When the round ends — either enough three-or-four ratings, or they hit the max test count — testing pauses until the next round email goes out."
+  },
+  {
+    "id": "10-ratings-matter",
+    "images": ["06b-user-detail-admin.png"],
+    "text": "Quick recap on ratings. Ones and twos mean the test was easy — it will not come back. Three and four trigger exercise suggestions and priority re-tests next round. Five is very hard — re-test later, but no exercise from that rating alone. Six removes the test permanently. You can see every rating in Users Progress when you wonder why the system picked certain exercises."
+  },
+  {
+    "id": "11-suggestions",
+    "images": ["06-user-detail-exercises.png"],
+    "text": "When a round ends, the plugin suggests up to five exercises — one per test they rated three or four, in the order they rated them, but only if that test has a linked exercise. You get an email to review. Open Users Progress, VIEW, and find Exercise assignments. Suggested rows need your OK — click Approve on each one, or Approve all suggested. Delete anything you do not want."
+  },
+  {
+    "id": "12-reorder",
+    "images": ["06-user-detail-exercises.png"],
+    "text": "Order matters. Use the up and down arrows, or drag the handle, to set the sequence. The top row is the first exercise the participant sees on Harjoitukset. You can also search and add an exercise manually — manual adds are approved automatically. Pick the right round tab — Round one, two, or three — before you save changes."
+  },
+  {
+    "id": "13-display",
+    "images": ["06b-user-detail-admin.png"],
+    "text": "Approving alone is not enough. When you are happy with the list, click the blue Display exercises button on the user detail screen. That is what actually shows Harjoitukset on their account and sends the email — your exercises are ready. They get a countdown from Settings — default twelve days recommended to practice. You can hide exercises with Exercises invisible and display again later if needed."
+  },
+  {
+    "id": "14-harjoitukset",
+    "images": ["10-frontend-exercises.png"],
+    "text": "This is what the participant sees after you display — the Harjoitukset tab with your approved exercises in order, plus the days-left message. If they only see a waiting message, you probably approved but forgot Display exercises. After the waiting period, they get the next-round email, fill progress questions, and start testing again — and you repeat approve, reorder, display for each round."
+  },
+  {
+    "id": "15-closing",
+    "images": ["title-outro.png"],
+    "text": "That is the full loop — create tests, link exercises, participants rate tests, you approve and display. Keep the documentation handy at mdhemalakanda dot github dot io slash balance-testing for checklists and troubleshooting. If every test has a linked exercise before launch, the rest runs smoothly. Thanks for watching — you have got this."
+  }
+]

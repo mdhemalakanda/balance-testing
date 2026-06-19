@@ -69,6 +69,29 @@
       line-height: 1.3;
       white-space: nowrap;
     }
+    .pill a { color: #fff; text-decoration: none; }
+    .pill a:hover { text-decoration: underline; }
+
+    .video-wrap {
+      margin: 0 0 28px;
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .video-wrap h2 { margin-top: 0; }
+    .video-wrap video {
+      width: 100%;
+      max-height: 520px;
+      border-radius: 10px;
+      background: #0f172a;
+    }
+    .video-wrap p.video-note {
+      margin: 12px 0 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
 
     .hero-search {
       margin-top: 22px;
@@ -808,6 +831,7 @@
         <span class="pill">Plugin: Balance Testing</span>
         <span class="pill">Site: parempitasapaino.fi</span>
         <span class="pill">Updated: June 2026</span>
+        <span class="pill"><a href="#video-walkthrough" style="color:#fff;text-decoration:none;">▶ Video walkthrough (~6 min)</a></span>
       </div>
       <div class="hero-search" id="hero-search-wrap">
         <label for="hero-search">Search documentation</label>
@@ -837,6 +861,7 @@
       <div class="toc-group toc-group--intro" data-group="intro">
         <span class="toc-group-label">Introduction</span>
         <a class="toc-link" href="#getting-started" data-section="getting-started" data-group="intro">Getting started</a>
+        <a class="toc-link" href="#video-walkthrough" data-section="video-walkthrough" data-group="intro">▶ Video walkthrough</a>
         <a class="toc-link" href="#overview" data-section="overview" data-group="intro">What this system does</a>
         <a class="toc-link" href="#how-system-works" data-section="how-system-works" data-group="intro">Full journey (start to finish)</a>
       </div>
@@ -933,6 +958,25 @@
         <div class="tip">
           <strong>Golden rule:</strong> Every published test should have a published exercise linked to it before participants start the course.
           Use <strong>Copy To excercise</strong> (one test) or <strong>Bulk copy to exercises</strong> (many tests at once).
+        </div>
+      </section>
+
+      <section id="video-walkthrough">
+        <div class="video-wrap">
+          <h2>▶ Video walkthrough (~6 minutes)</h2>
+          <p class="lead">
+            Watch the full Balance Testing workflow with voice narration — create tests, link exercises,
+            participant testing, approve, reorder, and display Harjoitukset.
+          </p>
+          <video controls playsinline preload="metadata" poster="assets/05-users-progress-list.png">
+            <source src="video/balance-testing-walkthrough.mp4" type="video/mp4" />
+            Your browser does not support HTML5 video.
+            <a href="video/balance-testing-walkthrough.mp4">Download the walkthrough video</a>
+          </video>
+          <p class="video-note">
+            American English narration · scenes synced to admin screenshots ·
+            <a href="video/balance-testing-walkthrough.mp4" download>Download MP4</a>
+          </p>
         </div>
       </section>
 
