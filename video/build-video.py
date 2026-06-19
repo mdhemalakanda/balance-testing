@@ -1,39 +1,38 @@
 #!/usr/bin/env python3
-"""Build walkthrough video: one short narration beat = one screenshot = perfect sync."""
+"""Build walkthrough: one narration line = one full screenshot, zero overlay, exact audio sync."""
 
 from __future__ import annotations
 
 import json
-import re
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 ASSETS = ROOT / "assets"
+FRAMES = ROOT / "frames"
 AUDIO = ROOT / "audio"
 SCENES_DIR = ROOT / "scenes"
 OUTPUT = ROOT / "balance-testing-walkthrough.mp4"
+MANIFEST = ROOT / "sync-manifest.json"
 BEATS_JSON = ROOT / "beats.json"
 
 FFMPEG = ROOT / "node_modules/@ffmpeg-installer/darwin-arm64/ffmpeg"
 FFPROBE = ROOT / "node_modules/@ffprobe-installer/darwin-arm64/ffprobe"
 
-# Warm, natural American male — slower and clearer
-VOICE = "en-US-AndrewNeural"
-RATE = "-14%"
-PITCH = "-2Hz"
-VOLUME = "+2%"
-PAUSE_SEC = 0.35
+VOICE = "en-US-GuyNeural"
+RATE = "-10%"
+PITCH = "+0Hz"
+VOLUME = "+0%"
 
 W, H = 1920, 1080
 FPS = 30
+MAX_DRIFT = 0.08
 
 
 def run(cmd: list[str], **kwargs) -> None:
-    if cmd and str(FFMPEG) in str(cmd[0]):
-        cmd = [cmd[0], "-loglevel", "error", *cmd[1:]]
-    elif cmd and str(FFPROBE) in str(cmd[0]):
+    exe = str(cmd[0]) if cmd else ""
+    if exe in (str(FFMPEG), str(FFPROBE)):
         cmd = [cmd[0], "-loglevel", "error", *cmd[1:]]
     subprocess.run(cmd, check=True, **kwargs)
 
@@ -55,14 +54,6 @@ def probe_duration(path: Path) -> float:
     return float(out.strip())
 
 
-def escape_drawtext(text: str) -> str:
-    text = text.replace("\\", "\\\\")
-    text = text.replace("'", "'\\''")
-    text = text.replace(":", "\\:")
-    text = text.replace("%", "\\%")
-    return text
-
-
 def make_title_slides() -> None:
     try:
         from PIL import Image, ImageDraw, ImageFont
@@ -70,28 +61,49 @@ def make_title_slides() -> None:
         subprocess.run([sys.executable, "-m", "pip", "install", "pillow", "-q"], check=True)
         from PIL import Image, ImageDraw, ImageFont
 
-    def slide(title: str, subtitle: str, filename: str, accent: str = "#1a5e95") -> None:
-        img = Image.new("RGB", (W, H), "#0f172a")
+    def slide(title: str, subtitle: str, filename: str) -> None:
+        img = Image.new("RGB", (W, H), "#111827")
         draw = ImageDraw.Draw(img)
-        draw.rectangle([0, 0, W, 8], fill=accent)
-        draw.rectangle([0, H - 8, W, H], fill=accent)
         try:
-            font_l = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 68)
-            font_s = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 34)
+            font_l = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 64)
+            font_s = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 32)
         except OSError:
             font_l = ImageFont.load_default()
             font_s = ImageFont.load_default()
-        draw.text((W // 2, H // 2 - 50), title, fill="#ffffff", font=font_l, anchor="mm")
-        draw.text((W // 2, H // 2 + 45), subtitle, fill="#94a3b8", font=font_s, anchor="mm")
+        draw.text((W // 2, H // 2 - 40), title, fill="#ffffff", font=font_l, anchor="mm")
+        draw.text((W // 2, H // 2 + 40), subtitle, fill="#9ca3af", font=font_s, anchor="mm")
         img.save(ASSETS / filename)
 
-    slide("Balance Testing", "Step-by-step administrator guide", "title-intro.png")
-    slide("You're all set", "Written guide on GitHub Pages", "title-outro.png", "#059669")
+    slide("Balance Testing", "Administrator walkthrough", "title-intro.png")
+    slide("Balance Testing", "You are ready to go", "title-outro.png")
+
+
+def prepare_frame(source_name: str) -> Path:
+    """Fit full screenshot on canvas — no crop, no zoom."""
+    try:
+        from PIL import Image
+    except ImportError:
+        subprocess.run([sys.executable, "-m", "pip", "install", "pillow", "-q"], check=True)
+        from PIL import Image
+
+    FRAMES.mkdir(exist_ok=True)
+    out = FRAMES / source_name
+    src = ASSETS / source_name
+    if not src.exists():
+        raise FileNotFoundError(src)
+
+    canvas = Image.new("RGB", (W, H), "#111827")
+    img = Image.open(src).convert("RGB")
+    img.thumbnail((W - 80, H - 80), Image.Resampling.LANCZOS)
+    x = (W - img.width) // 2
+    y = (H - img.height) // 2
+    canvas.paste(img, (x, y))
+    canvas.save(out, quality=95)
+    return out
 
 
 def generate_audio(beat: dict) -> Path:
-    beat_id = beat["id"]
-    mp3 = AUDIO / f"{beat_id}.mp3"
+    mp3 = AUDIO / f"{beat['id']}.mp3"
     if mp3.exists():
         mp3.unlink()
     run(
@@ -111,31 +123,13 @@ def generate_audio(beat: dict) -> Path:
     return mp3
 
 
-def build_beat_video(beat: dict, index: int) -> Path:
-    beat_id = beat["id"]
+def build_beat_video(beat: dict, index: int, timeline: float) -> tuple[Path, dict]:
     audio = generate_audio(beat)
-    duration = probe_duration(audio) + PAUSE_SEC
-    out = SCENES_DIR / f"{index:03d}-{beat_id}.mp4"
+    audio_dur = probe_duration(audio)
+    frame = prepare_frame(beat["image"])
+    out = SCENES_DIR / f"{index:03d}-{beat['id']}.mp4"
 
-    img = ASSETS / beat["image"]
-    if not img.exists():
-        raise FileNotFoundError(f"Missing asset: {img}")
-
-    label = escape_drawtext(beat.get("label", ""))
-    caption = escape_drawtext(beat["text"][:120])
-
-    vf = (
-        f"scale={W}:{H}:force_original_aspect_ratio=decrease,"
-        f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color=0x0f172a,"
-        f"drawtext=text='{label}':fontfile=/System/Library/Fonts/Supplemental/Arial Bold.ttf:"
-        f"fontcolor=0xFFFFFF:fontsize=42:box=1:boxcolor=0x1a5e95@0.92:boxborderw=16:"
-        f"x=48:y=48,"
-        f"drawtext=text='{caption}':fontfile=/System/Library/Fonts/Supplemental/Arial.ttf:"
-        f"fontcolor=0xE2E8F0:fontsize=28:box=1:boxcolor=0x000000@0.55:boxborderw=14:"
-        f"x=(w-text_w)/2:y=h-100,"
-        f"format=yuv420p"
-    )
-
+    # Static frame for exact audio length — no zoom, no padding silence, no overlays
     run(
         [
             str(FFMPEG),
@@ -144,40 +138,55 @@ def build_beat_video(beat: dict, index: int) -> Path:
             "1",
             "-framerate",
             str(FPS),
+            "-t",
+            f"{audio_dur:.4f}",
             "-i",
-            str(img),
+            str(frame),
             "-i",
             str(audio),
             "-vf",
-            vf,
+            f"scale={W}:{H},format=yuv420p",
             "-c:v",
             "libx264",
             "-preset",
             "medium",
             "-crf",
-            "19",
+            "20",
             "-r",
             str(FPS),
             "-c:a",
             "aac",
             "-b:a",
             "192k",
-            "-af",
-            f"apad=pad_dur={PAUSE_SEC}",
-            "-t",
-            f"{duration:.3f}",
+            "-ar",
+            "48000",
+            "-ac",
+            "2",
+            "-shortest",
             "-pix_fmt",
             "yuv420p",
-            "-movflags",
-            "+faststart",
             str(out),
         ]
     )
 
-    actual = probe_duration(out)
-    audio_len = probe_duration(audio)
-    print(f"  beat {beat_id} [{beat.get('label','')}]: {actual:.2f}s (voice {audio_len:.2f}s + pause)")
-    return out
+    video_dur = probe_duration(out)
+    drift = abs(video_dur - audio_dur)
+    entry = {
+        "beat": beat["id"],
+        "start_sec": round(timeline, 3),
+        "end_sec": round(timeline + video_dur, 3),
+        "audio_sec": round(audio_dur, 3),
+        "video_sec": round(video_dur, 3),
+        "drift_sec": round(drift, 4),
+        "image": beat["image"],
+        "text": beat["text"],
+        "ok": drift <= MAX_DRIFT,
+    }
+    status = "OK" if entry["ok"] else "FAIL"
+    print(f"  [{status}] beat {beat['id']} {video_dur:.2f}s · {beat['image']}")
+    if not entry["ok"]:
+        raise RuntimeError(f"Sync drift {drift:.3f}s on beat {beat['id']}")
+    return out, entry
 
 
 def concat_all(parts: list[Path]) -> None:
@@ -193,8 +202,22 @@ def concat_all(parts: list[Path]) -> None:
             "0",
             "-i",
             str(lst),
-            "-c",
-            "copy",
+            "-c:v",
+            "libx264",
+            "-preset",
+            "medium",
+            "-crf",
+            "20",
+            "-c:a",
+            "aac",
+            "-b:a",
+            "192k",
+            "-ar",
+            "48000",
+            "-vsync",
+            "cfr",
+            "-r",
+            str(FPS),
             "-movflags",
             "+faststart",
             str(OUTPUT),
@@ -202,27 +225,43 @@ def concat_all(parts: list[Path]) -> None:
     )
 
 
+def verify_final(manifest: list[dict]) -> None:
+    final_dur = probe_duration(OUTPUT)
+    expected = manifest[-1]["end_sec"] if manifest else 0
+    if abs(final_dur - expected) > 0.5:
+        raise RuntimeError(f"Final duration mismatch: file={final_dur:.2f}s expected={expected:.2f}s")
+    failed = [m for m in manifest if not m["ok"]]
+    if failed:
+        raise RuntimeError(f"{len(failed)} beats failed sync check")
+    MANIFEST.write_text(json.dumps(manifest, indent=2))
+    print(f"Sync check passed: {len(manifest)} beats, total {final_dur:.1f}s")
+
+
 def main() -> None:
     if not FFMPEG.exists():
         sys.exit("Run: npm install @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe")
 
-    AUDIO.mkdir(exist_ok=True)
-    SCENES_DIR.mkdir(exist_ok=True)
-    make_title_slides()
+    for d in (AUDIO, SCENES_DIR, FRAMES):
+        d.mkdir(exist_ok=True)
 
+    make_title_slides()
     beats = json.loads(BEATS_JSON.read_text())
     parts: list[Path] = []
+    manifest: list[dict] = []
+    timeline = 0.0
 
-    print(f"Building {len(beats)} synced beats · voice {VOICE} · rate {RATE}")
+    print(f"Building {len(beats)} beats · {VOICE} · no zoom · no overlays · no gaps")
     for i, beat in enumerate(beats, 1):
         print(f"[{i}/{len(beats)}]")
-        parts.append(build_beat_video(beat, i))
+        part, entry = build_beat_video(beat, i, timeline)
+        parts.append(part)
+        manifest.append(entry)
+        timeline = entry["end_sec"]
 
     concat_all(parts)
-    final_dur = probe_duration(OUTPUT)
+    verify_final(manifest)
     print(f"\nDone: {OUTPUT}")
-    print(f"Duration: {final_dur / 60:.1f} min ({final_dur:.0f}s)")
-    print(f"Beats: {len(beats)} (one image + one narration line each)")
+    print(f"Manifest: {MANIFEST}")
 
 
 if __name__ == "__main__":
