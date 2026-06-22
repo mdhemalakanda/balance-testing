@@ -1273,7 +1273,8 @@
         </div>
 
         <div class="tip">
-          <strong>Remember:</strong> Approving exercises is not enough — you must click <strong>Display exercises</strong> or the participant will only see a waiting message on Harjoitukset.
+          <strong>Remember:</strong> Approving exercises is not enough — you must click <strong>Display exercises</strong> or the participant will only see this waiting text on Harjoitukset:
+          <em>Tarkistamme harjoitukset ennen niiden julkaisemista täällä.</em>
           For the complete explanation of how tests connect to exercises, read <a href="#test-exercise-link">Link test to exercise (full process)</a>.
         </div>
       </section>
@@ -1453,7 +1454,7 @@
               <td>Check Identifier and Linked exercise on both posts. Delete wrong exercise assignment row; add correct exercise manually if needed.</td>
             </tr>
             <tr>
-              <td>Participant sees waiting message on Harjoitukset</td>
+              <td>Participant sees <em>Tarkistamme harjoitukset ennen niiden julkaisemista täällä.</em> on Harjoitukset</td>
               <td>Exercises approved but not displayed</td>
               <td>Click <strong>Display exercises</strong> in Users Progress. See <a href="#display-to-user">Display to participant</a>.</td>
             </tr>
@@ -1646,9 +1647,19 @@
       <section id="harjoitukset" class="section-exercise">
         <h2>Harjoitukset — participant view <span class="badge badge-user">Participant</span></h2>
         <p>
-          Before you click <strong>Display exercises</strong>, this tab shows a waiting message.
+          Before you click <strong>Display exercises</strong>, this tab shows:
+        </p>
+        <p class="lead" style="font-style: italic; margin-top: 0;">
+          Tarkistamme harjoitukset ennen niiden julkaisemista täällä.
+        </p>
+        <p>
           After you display, they see their personal program in the order you set.
         </p>
+
+        <figure>
+          <img src="assets/10-exercises-waiting.png" alt="Harjoitukset tab before exercises are displayed" />
+          <figcaption>Harjoitukset tab before <strong>Display exercises</strong> — participant waiting message (plugin v1.2.1+).</figcaption>
+        </figure>
 
         <ol>
           <li>Open <strong>Harjoitukset</strong> on their account (/bt-user-account/).</li>

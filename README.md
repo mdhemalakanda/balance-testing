@@ -24,6 +24,12 @@ The guide includes **Link test to exercise (full process)** under the Exercises 
 
 1. Edit `user-guide.html` in this folder.
 2. Sync: `cp user-guide.html index.html`
-3. From a clone of the GitHub repo, copy these files and push to `main`.
+3. From a clone of the GitHub repo, copy these files and push to `main`:
+   - `index.html`, `user-guide.html`
+   - `assets/` (include new screenshots when the UI copy changes, e.g. `10-exercises-waiting.png`)
 
 Or deploy from `/tmp/balance-testing-gh` after cloning the repo.
+
+### Recent doc updates
+
+- **v1.2.1** — Harjoitukset waiting copy: *Tarkistamme harjoitukset ennen niiden julkaisemista täällä.*
