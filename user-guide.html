@@ -892,6 +892,7 @@
         <span class="toc-group-label">Participants &amp; progress</span>
         <a class="toc-link" href="#create-users" data-section="create-users" data-group="participants">Add course participants</a>
         <a class="toc-link" href="#users-progress" data-section="users-progress" data-group="participants">Users Progress dashboard</a>
+        <a class="toc-link sub" href="#grant-questionnaire-access" data-section="grant-questionnaire-access" data-group="participants">Questionnaire access granted</a>
       </div>
 
       <div class="toc-group toc-group--site" data-group="site">
@@ -1746,6 +1747,62 @@
           <img src="assets/05-users-progress-list.png" alt="Users Progress list" />
           <figcaption>User list with round numbers and View action.</figcaption>
         </figure>
+
+        <h3 id="grant-questionnaire-access">Grant progress questionnaire access</h3>
+        <p>
+          When a participant <strong>finishes a test round</strong> (reaches the 3/4 threshold or max tests for that round),
+          they must complete the <strong>Seuraa edistymistä</strong> progress questionnaire before the next test round starts.
+          Access to that form is unlocked in one of three ways:
+        </p>
+        <ol>
+          <li><strong>Scheduled email</strong> — participant clicks the login link in the round follow-up email (default delay: 12 days; configurable under Tests → Settings).</li>
+          <li><strong>Auto-access</strong> — if <em>Enable auto access</em> is on, the form unlocks automatically after the auto-access delay (default: 10 days).</li>
+          <li><strong>Manual grant (you)</strong> — click <strong>Grant Access For Round X Questions</strong> on the Users Progress list (see below).</li>
+        </ol>
+
+        <figure>
+          <img src="assets/11-questionnaire-access-granted.png" alt="Users Progress row showing Questionnaire access granted status" />
+          <figcaption>
+            After you grant access (or auto-access / email link fires), the Action column shows
+            <strong>Questionnaire access granted</strong> instead of the grant button.
+            In this example, <em>jibran emp</em> is on <strong>Round 1</strong> — they finished Round 1 tests and can now open
+            <strong>Seuraa edistymistä</strong> to answer symptom and exercise-habit questions for Round 2.
+            When they submit that form, their <code>test_round</code> advances to <strong>2</strong> and they can start the next balance tests.
+          </figcaption>
+        </figure>
+
+        <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>What you see in Action</th><th>Meaning</th><th>What the participant can do</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Grant Access For Round 2 Questions</strong> (button)</td>
+              <td>Round 1 tests are done; progress form is still locked</td>
+              <td>Only Tasapainotestit “round complete” message — cannot fill progress form yet</td>
+            </tr>
+            <tr>
+              <td><strong>Questionnaire access granted</strong> (grey label)</td>
+              <td>You (or email / auto-access) unlocked the progress questionnaire</td>
+              <td>Open <strong>Seuraa edistymistä</strong>, submit the form → advances to next test round</td>
+            </tr>
+            <tr>
+              <td>Neither button nor label</td>
+              <td>User still in an active test round, or all rounds completed</td>
+              <td>Continue tests, or course finished</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="tip">
+          <strong>Not the same as Harjoitukset:</strong>
+          <em>Questionnaire access granted</em> unlocks the <strong>progress check-in form</strong> between test rounds.
+          It does <strong>not</strong> display exercises. Exercises are separate — approve rows in user detail, then click
+          <strong>Display exercises</strong>. Until then the participant sees
+          <em>Tarkistamme harjoitukset ennen niiden julkaisemista täällä.</em> on Harjoitukset.
+        </div>
 
         <h3>Open a user</h3>
         <ol>

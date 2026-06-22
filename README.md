@@ -33,3 +33,4 @@ Or deploy from `/tmp/balance-testing-gh` after cloning the repo.
 ### Recent doc updates
 
 - **v1.2.1** — Harjoitukset waiting copy: *Tarkistamme harjoitukset ennen niiden julkaisemista täällä.*
+- **Users Progress** — screenshot and guide for **Questionnaire access granted** (`assets/11-questionnaire-access-granted.png`).
